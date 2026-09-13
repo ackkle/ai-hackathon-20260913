@@ -9,19 +9,22 @@ import { getFeatureMode } from '@/config/features';
 import { ModeBanner, ScreenHeading } from '@/features/reflection/ui';
 import { useStoredState } from '@/features/reflection/use-stored-state';
 import { saveState } from '@/shared/storage';
-import { SEND_NOTICE, WISH_EXAMPLES, WISH_MAX, applyWish, createWish } from './logic';
+import { SEND_NOTICE, WISH_EXAMPLES, WISH_MAX, applyWish, canRewriteWish, createWish } from './logic';
 
 export function WishScreen() {
   const router = useRouter();
   const stored = useStoredState();
-  const [text, setText] = useState('');
+  const [text, setText] = useState<string | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
 
   if (stored === null) return <p className="text-sm text-[var(--muted)]">読み込んでいます…</p>;
 
   const state = stored.data;
-  const locked = state.wish !== null;
-  const trimmed = text.trim();
+  // 回答や道のりができるまでは書き直せる。できたあとは設定から始め直す
+  const locked = !canRewriteWish(state);
+  // 保存済みの願いがあれば、それを直せるように入れておく
+  const value = text ?? state.wish?.text ?? '';
+  const trimmed = value.trim();
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -58,7 +61,7 @@ export function WishScreen() {
             <label className="mb-2 block">
               <span className="sr-only">どんなことを願っていますか</span>
               <textarea
-                value={text}
+                value={value}
                 onChange={event => setText(event.target.value.slice(0, WISH_MAX))}
                 maxLength={WISH_MAX}
                 rows={4}
@@ -66,7 +69,7 @@ export function WishScreen() {
                 className="w-full rounded-xl border border-[#d8e1d3] bg-white p-3 text-base"
               />
             </label>
-            <p className="mb-4 text-right text-xs text-[var(--muted)]">{text.length} / {WISH_MAX}</p>
+            <p className="mb-4 text-right text-xs text-[var(--muted)]">{value.length} / {WISH_MAX}</p>
 
             <div className="mb-6 flex flex-wrap gap-2">
               {WISH_EXAMPLES.map(example => (

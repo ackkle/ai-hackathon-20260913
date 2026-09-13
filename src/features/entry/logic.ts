@@ -19,12 +19,19 @@ export function createWish(input: { id: string; text: string; now: string }): Wi
 }
 
 /**
- * 願いは1件だけ持つ。すでに回答や計画がある場合は上書きしない
- * （B案 §1.3・§10.1 と同じ「上書きより前に確認する」方針）。
+ * 願いはまだ何も積み上がっていないうちは書き直せる。
+ * 守りたいのは「積み上げた回答や道のりを黙って捨てないこと」であって、
+ * 書き間違いの直しまで止める必要はない（以前は wish があるだけで拒んでいて、
+ * 誤字を直すのに記録の全削除しか道が無かった）。
+ * 回答・道のり・行動のどれかがあるときは、これまでどおり設定から始め直す。
  */
+export function canRewriteWish(state: ReserveState): boolean {
+  return state.answers.length === 0 && !state.tree && state.actions.length === 0;
+}
+
 export function applyWish(state: ReserveState, wish: Wish): ReserveState {
-  if (state.wish || state.answers.length > 0 || state.tree) {
-    throw new Error('すでに願いが保存されています。新しい願いは設定から始めてください');
+  if (!canRewriteWish(state)) {
+    throw new Error('すでに回答や道のりがあります。新しい願いは設定から始めてください');
   }
   return { ...state, entry: { type: 'wish' }, wish };
 }

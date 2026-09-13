@@ -1,0 +1,216 @@
+<title>リザーブマシン 決勝デッキ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Shippori+Mincho:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* 単一テーマ（投影用の黒デッキ）。前田鎌利式＝黒地・白文字・1枚1メッセージ／usutaku式＝でかい文字・余白・装飾なし */
+  :root {
+    --ink: #0b0b0d;        /* 黒（わずかに青寄り） */
+    --paper: #f5f1ea;      /* 文字の白（朝の光に寄せた温白） */
+    --mute: #8c877f;       /* 補助テキスト */
+    --line: #2a2a2f;       /* 罫線 */
+    --dawn: #f0a35a;       /* 唯一のアクセント＝朝日の橙。使うのは「朝」の枚と締めだけ */
+    --sans: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+    --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--ink); color: var(--paper);
+    font-family: var(--sans); overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  .deck { position: relative; width: 100vw; height: 100vh; }
+  .slide {
+    position: absolute; inset: 0; display: none;
+    padding: clamp(32px, 6vw, 96px);
+    box-sizing: border-box;
+    flex-direction: column; justify-content: center;
+  }
+  .slide.active { display: flex; }
+  .slide.active { animation: in .28s ease-out; }
+  @keyframes in { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none;} }
+  @media (prefers-reduced-motion: reduce) { .slide.active { animation: none; } }
+
+  /* キーメッセージ：1枚に1文。文字は画面幅に対して極端に大きく */
+  .msg {
+    font-weight: 900; line-height: 1.25; letter-spacing: 0.01em;
+    font-size: clamp(36px, 6.4vw, 104px);
+    margin: 0; max-width: 18em; text-wrap: balance;
+  }
+  .msg.serif { font-family: var(--serif); font-weight: 700; letter-spacing: 0.04em; line-height: 1.5; }
+  .sub {
+    margin: 0.9em 0 0; color: var(--mute); font-weight: 500;
+    font-size: clamp(18px, 2vw, 30px); line-height: 1.6; max-width: 30em;
+  }
+  .num {
+    font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: clamp(72px, 16vw, 260px); font-weight: 500; line-height: 1; margin: 0;
+    letter-spacing: -0.03em;
+  }
+  .num small { font-family: var(--sans); font-size: 0.28em; font-weight: 700; margin-left: 0.3em; color: var(--mute); }
+  .dawn { color: var(--dawn); }
+
+  /* 左右2分割（3枚目） */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 80px); align-items: center; }
+  .split > div { border-left: 2px solid var(--line); padding-left: 1em; }
+  .split .msg { font-size: clamp(28px, 4.2vw, 68px); }
+  .split .who { color: var(--mute); font-family: var(--mono); font-size: 14px; letter-spacing: .08em; margin: 0 0 .8em; }
+
+  /* 断絶図（4枚目） */
+  .gap { display: flex; align-items: center; gap: 4vw; margin-top: 1.5em; font-weight: 700; font-size: clamp(22px, 3vw, 48px); }
+  .gap .box { border: 2px solid var(--paper); padding: .5em 1em; }
+  .gap .q { flex: 1; border-top: 2px dashed var(--line); position: relative; text-align: center; }
+  .gap .q span { position: absolute; top: -.9em; left: 50%; transform: translateX(-50%); background: var(--ink); padding: 0 .5em; color: var(--dawn); font-family: var(--mono); font-size: 1.4em; }
+
+  /* 階段（5枚目） */
+  .stairs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 1.6em; align-items: end; }
+  .stairs div { background: var(--line); color: var(--paper); font-weight: 700; font-size: clamp(12px, 1.4vw, 22px); padding: .6em .5em; box-sizing: border-box; }
+  .stairs div:last-child { background: var(--dawn); color: var(--ink); }
+
+  /* 動画（6枚目） */
+  .video { width: min(100%, 160vh); aspect-ratio: 16/9; background: #141418; border: 1px solid var(--line); display: grid; place-items: center; color: var(--mute); font-family: var(--mono); margin: 0 auto; }
+  .video video { width: 100%; height: 100%; object-fit: contain; }
+
+  /* 分担図（8枚目）と一線（9枚目） */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 1.4em; font-size: clamp(16px, 1.8vw, 28px); }
+  .two > div { padding: 1em 1.2em; border: 1px solid var(--line); }
+  .two h3 { margin: 0 0 .5em; font-size: 1.15em; font-weight: 900; }
+  .two ul { margin: 0; padding-left: 1.1em; color: var(--mute); line-height: 1.7; }
+  .rules { list-style: none; padding: 0; margin: 1.2em 0 0; font-size: clamp(20px, 2.6vw, 44px); font-weight: 700; line-height: 1.5; }
+  .rules li { padding: .35em 0; border-top: 1px solid var(--line); }
+  .rules li::before { content: "—"; color: var(--dawn); margin-right: .5em; }
+
+  /* 下部の情報：枚数・秒数・進捗 */
+  .hud { position: fixed; left: 0; right: 0; bottom: 0; padding: 14px clamp(24px, 4vw, 64px); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 13px; color: var(--mute); letter-spacing: .06em; }
+  .bar { position: fixed; left: 0; bottom: 0; height: 3px; background: var(--dawn); transition: width .3s; }
+  .notes { position: fixed; right: 0; top: 0; bottom: 0; width: min(420px, 90vw); background: #141418; border-left: 1px solid var(--line); padding: 28px; box-sizing: border-box; overflow: auto; font-size: 15px; line-height: 1.8; color: var(--paper); transform: translateX(100%); transition: transform .25s; }
+  .notes.open { transform: none; }
+  .notes h4 { margin: 0 0 .5em; font-family: var(--mono); font-size: 12px; color: var(--mute); letter-spacing: .1em; }
+  .notes p { margin: 0 0 1em; }
+  .help { position: fixed; top: 14px; right: 18px; font-family: var(--mono); font-size: 12px; color: var(--mute); }
+  button:focus-visible { outline: 2px solid var(--dawn); }
+  @media (max-width: 720px) {
+    .split, .two { grid-template-columns: 1fr; }
+    .stairs { grid-template-columns: repeat(3, 1fr); }
+    .help { display: none; }
+  }
+</style>
+
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide" data-sec="25" data-note="黒い画面に1行だけ。3秒黙ってから読む。製品名は言わない。「目が覚める。会社に行かなくていい。予定がない。……さて、何をしよう。」ここで区切って次へ。">
+    <p class="msg serif">2036年、水曜日の朝。</p>
+    <p class="sub">目が覚める。会社に行かなくていい。予定がない。<br>——さて、何をしよう。</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide" data-sec="20" data-note="これは想像ではない、を数字で言う。週休3日はもう始まっている会社がある。「空白は自分で作るものではなく、降ってくる」を強めに。数字は4,160だけ覚えてもらう。">
+    <p class="msg">これは、想像の話ではない。</p>
+    <p class="num dawn">4,160<small>時間</small></p>
+    <p class="sub">週休3日になった人に、10年で降ってくる空白。<br>AIで仕事が減る。定年が来る。就活が終わる。——空白は、作るものではなく、降ってくる。</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide" data-sec="20" data-note="左右で同じ朝を対比。違いは「やる気」ではない、と先に否定してから理由を言う。「やる気を仕事に吸われてきて、空白を感じたことがないだけ」。誰も責めない口調で。">
+    <div class="split">
+      <div><p class="who">決まっている人</p><p class="msg serif">今日は、陶芸の日だ。</p></div>
+      <div><p class="who">決まっていない人</p><p class="msg serif">……とりあえず、スマホを見る。</p></div>
+    </div>
+    <p class="sub">違いは「やる気」ではない。やる気を仕事に吸われてきて、空白を感じたことがないだけ。</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" data-sec="25" data-note="ここが課題の核。「やりたいことを見つけよう」は正しいが、明日の予定は1ミリも変わらない。願いとカレンダーのあいだが空いている。図の「?」を指す。">
+    <p class="msg">「やりたいことを見つけよう」では、<br>明日は変わらない。</p>
+    <div class="gap">
+      <div class="box">願い</div>
+      <div class="q"><span>?</span></div>
+      <div class="box">カレンダー</div>
+    </div>
+    <p class="sub">願いと、明日の予定のあいだが空いている。ここを埋めるものが、なかった。</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide" data-sec="20" data-note="ここで初めて製品名。「10年後の朝から逆算して、今週のカレンダーに1件だけ入れる。それがリザーブマシン。」階段を上から下へ指でなぞる。">
+    <p class="msg">だから、<span class="dawn">逆算して予約する。</span></p>
+    <div class="stairs">
+      <div>10年後の生活</div><div>3年後</div><div>1年後</div><div>今月</div><div>今週</div><div>明日の1件</div>
+    </div>
+    <p class="sub">10年後の朝から逆算して、今週のカレンダーに1件だけ入れる。<br>それが、リザーブマシン。</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide" data-sec="90" data-note="動画90秒。0-10 空白の提示／10-20 願い→質問（1問は「分からない」で「仮」）／20-35 10年後の値札と出どころ／35-50 逆算ツリーで期限を変えて再計算／50-65 予約票→カレンダー／65-85 できなかった日→小さくした次の一歩を承認／85-90 構想デモを2秒ずつ。ナレーションは最小。">
+    <div class="video">
+      <!-- 動画ができたら src を差し替える -->
+      <video controls playsinline preload="metadata" poster="">
+        <source src="demo.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" data-sec="25" data-note="動画の最後の場面（S-14）を止めたまま話す。「できなかった」の次に来るのは反省ではなく、小さくした次の一歩。行動の件数を点数にしない。達成率も出さない。ここが一番人間の話。">
+    <p class="msg">できなかった日も、責めない。</p>
+    <p class="sub">「できなかった」の次に来るのは、反省ではなく、小さくした次の一歩。<br>行動の件数を、点数にも達成率にもしない。</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" data-sec="20" data-note="技術は1枚だけ。生成と計算を分けた、が全部。AIの出力はzodで検証し、失敗したら1回だけ作り直す。キーはサーバー側。深追いしない。">
+    <p class="msg">AIは言葉を、コードは数字を。</p>
+    <div class="two">
+      <div><h3>AI が作る</h3><ul><li>質問</li><li>10年後の生活の1行</li><li>逆算ツリーの言葉</li><li>次の一歩</li></ul></div>
+      <div><h3>コードが決める</h3><ul><li>値札の計算（初期費用・月額・週の時間）</li><li>日時候補と重なりの警告</li><li>出力の形式検証（zod、失敗は1回だけ再生成）</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide" data-sec="25" data-note="差別化はここ。機能ではなく態度。3行を1行ずつ読む。最後に設定画面の機能モード一覧を見せて「動いていない機能は、画面が自分で言います」。">
+    <p class="msg">越えなかった一線。</p>
+    <ul class="rules">
+      <li>入っていない予定を「登録済み」と言わない</li>
+      <li>統計の数字を作らない。推定は「AIの推定」と書く</li>
+      <li>動いていない機能は、画面が自分で言う</li>
+    </ul>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide" data-sec="20" data-note="1枚目と同じ画面に戻る。間を取ってから「今日は、陶芸の日だ。」最後にキャッチコピーを一度だけ読んで、お辞儀。">
+    <p class="msg serif">もう一度、2036年の水曜日の朝。</p>
+    <p class="sub">目が覚める。<span class="dawn">今日は、陶芸の日だ。</span></p>
+    <p class="msg" style="margin-top:1.2em;font-size:clamp(24px,3.4vw,56px)">空白が来る前に、10年後の楽しみを予約する。</p>
+  </section>
+
+</div>
+
+<div class="help">← → 移動 ／ N ノート ／ F 全画面</div>
+<div class="hud"><span id="pos">1 / 10</span><span id="sec"></span><span id="total"></span></div>
+<div class="bar" id="bar"></div>
+<aside class="notes" id="notes"><h4>SPEAKER NOTE</h4><p id="noteText"></p></aside>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.reduce((s, el) => s + Number(el.dataset.sec || 0), 0);
+  document.getElementById('total').textContent = `合計 ${Math.floor(total/60)}:${String(total%60).padStart(2,'0')}`;
+  let i = Math.min(slides.length - 1, Math.max(0, Number(location.hash.slice(1)) - 1 || 0));
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    document.getElementById('pos').textContent = `${i+1} / ${slides.length}`;
+    document.getElementById('sec').textContent = `この枚 ${slides[i].dataset.sec}s`;
+    document.getElementById('bar').style.width = `${(i+1)/slides.length*100}%`;
+    document.getElementById('noteText').textContent = slides[i].dataset.note || '';
+    history.replaceState(null, '', `#${i+1}`);
+  }
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight',' ','PageDown'].includes(e.key)) { e.preventDefault(); show(i+1); }
+    else if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); show(i-1); }
+    else if (e.key.toLowerCase() === 'n') document.getElementById('notes').classList.toggle('open');
+    else if (e.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
+  });
+  document.getElementById('deck').addEventListener('click', e => {
+    if (e.target.closest('video')) return;
+    show(e.clientX > innerWidth / 2 ? i + 1 : i - 1);
+  });
+  show(i);
+</script>

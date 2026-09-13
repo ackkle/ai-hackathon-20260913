@@ -21,10 +21,18 @@ describe('S-03 願いの入力', () => {
     expect(result.entry).toEqual({ type: 'wish' });
   });
 
-  it('すでに願いがあれば上書きしない', () => {
+  it('願いだけの段階なら書き直せる', () => {
     const state = createEmptyState();
     const first = applyWish(state, createWish({ id: 'wish_1', text: '何かしたい', now }));
-    expect(() => applyWish(first, createWish({ id: 'wish_2', text: '英語を話したい', now }))).toThrow();
+    const rewritten = applyWish(first, createWish({ id: 'wish_2', text: '英語を話したい', now }));
+    expect(rewritten.wish?.text).toBe('英語を話したい');
+  });
+
+  it('道のりができていれば上書きしない', () => {
+    const state = createEmptyState();
+    const first = applyWish(state, createWish({ id: 'wish_1', text: '何かしたい', now }));
+    const built = { ...first, tree: { goals: [], metrics: [], monthly: [] } };
+    expect(() => applyWish(built, createWish({ id: 'wish_2', text: '英語を話したい', now }))).toThrow();
   });
 
   it('回答や道筋がすでにあれば上書きしない', () => {
