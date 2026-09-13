@@ -8,7 +8,7 @@ export function ScreenShell({ screenId, children }: { screenId: ScreenId; childr
     <>
       <div className="mode-banner" role="status">{concept ? '構想デモ（実際のデータではありません）' : 'サンプル：画面の準備中です'}</div>
       <section className="screen-panel">
-        <p className="eyebrow" data-screen={screenId}><span>リザーブマシン</span></p>
+        
         <h1>{screen.title}</h1>
         <p className="intro">{screen.description}</p>
         <div className="ticket-preview" aria-label="画面の準備状況">

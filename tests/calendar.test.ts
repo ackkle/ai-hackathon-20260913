@@ -57,7 +57,7 @@ describe('テンプレートURL（B案 §12.2）', () => {
     const parsed = new URL(url!);
     expect(parsed.origin + parsed.pathname).toBe('https://calendar.google.com/calendar/render');
     expect(parsed.searchParams.get('action')).toBe('TEMPLATE');
-    expect(parsed.searchParams.get('text')).toBe('【リザーブマシン】陶芸体験の空きを調べる');
+    expect(parsed.searchParams.get('text')).toBe('【未来メーカー】陶芸体験の空きを調べる');
     expect(parsed.searchParams.get('dates')).toBe('20260919T100000/20260919T103000');
     expect(parsed.searchParams.get('ctz')).toBe('Asia/Tokyo');
     expect(parsed.searchParams.get('details')).toContain('今回の一歩：陶芸体験の空きを調べる');
@@ -68,7 +68,7 @@ describe('テンプレートURL（B案 §12.2）', () => {
   });
 
   it('タイトルに目印を付ける（B案 FR-08）', () => {
-    expect(buildTitle(action({ title: '土に触る' }))).toBe('【リザーブマシン】土に触る');
+    expect(buildTitle(action({ title: '土に触る' }))).toBe('【未来メーカー】土に触る');
   });
 });
 

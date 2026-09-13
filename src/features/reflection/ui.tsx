@@ -18,14 +18,14 @@ export function ScreenHeading({ screenId }: { screenId: ScreenId }) {
   const step = STEPS.indexOf(screenId);
   return (
     <>
-      <p className="eyebrow" data-screen={screenId}>
-        <span>リザーブマシン</span>
-        {step >= 0 && (
+      {/* アプリ名はヘッダに出ているので、ここは歩数だけ出す */}
+      {step >= 0 && (
+        <p className="eyebrow" data-screen={screenId}>
           <span>
             {step + 1} / {STEPS.length}
           </span>
-        )}
-      </p>
+        </p>
+      )}
       <h1>{screen.title}</h1>
       <p className="intro">{screen.description}</p>
     </>

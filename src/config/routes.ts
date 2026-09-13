@@ -8,7 +8,7 @@ export const screenRoutes = [
   { id: 'S-07', path: '/future', title: '10年後の、好きな日常', description: '続けていたい暮らしと、必要な時間を思い描きます。', next: '/tree' },
   { id: 'S-08', path: '/tree', title: '未来につながる道のり', description: '遠い願いを、今週できることまで小さく。', next: '/schedule' },
   { id: 'S-09', path: '/schedule', title: '最初の一日を決める', description: '自分のための時間を、ひとつ確保しましょう。', next: '/ticket/demo' },
-  { id: 'S-10', path: '/ticket/demo', title: 'あなたのリザーブ票', description: 'やりたいことと、最初の一歩を一枚に。', next: '/calendar/demo' },
+  { id: 'S-10', path: '/ticket/demo', title: 'あなたの予約票', description: 'やりたいことと、最初の一歩を一枚に。', next: '/calendar/demo' },
   { id: 'S-11', path: '/calendar/demo', title: 'カレンダーに入れる', description: 'いつもの予定の中に、あなたの楽しみを。', next: '/home' },
   { id: 'S-12', path: '/home', title: '次の楽しみ', description: 'できた日も、できなかった日も。ここからまた。', next: '/reflect/demo' },
   { id: 'S-13', path: '/reflect/demo', title: 'やってみて、どうでしたか？', description: '結果だけでなく、あなたの気持ちも残しましょう。', next: '/next-step/demo' },

@@ -1,6 +1,7 @@
 'use client';
 /**
- * S-17 設定（F-27 記録の全削除と置き換え確認、F-35 機能モード一覧）。
+ * S-17 設定（F-27 記録の全削除と置き換え確認）。
+ * 機能モード一覧（F-35）は開発者向けの表で、利用者には意味が無いので出さない。
  *
  * S-03 が「設定から新しい願いを始められます」と案内しているのに、この画面が
  * 準備中のままで行き止まりになっていた。願いを書き直す道をここで開く。
@@ -11,7 +12,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { ModeList } from '@/features/foundation/mode-list';
 import { ScreenHeading } from '@/features/reflection/ui';
 import { clearState, loadState } from '@/shared/storage';
 import type { ReserveState } from '@/shared/types';
@@ -22,8 +22,8 @@ function describeSaved(state: ReserveState): { label: string; value: string }[] 
   const rows: { label: string; value: string }[] = [];
   if (state.wish) rows.push({ label: '願い', value: state.wish.text });
   if (state.answers.length > 0) rows.push({ label: '質問への回答', value: `${state.answers.length}件` });
-  if (state.futureLife) rows.push({ label: '10年後の生活と値札', value: 'あり' });
-  if (state.tree) rows.push({ label: '逆算ツリー', value: 'あり' });
+  if (state.futureLife) rows.push({ label: '10年後の暮らし', value: 'あり' });
+  if (state.tree) rows.push({ label: 'これからの道のり', value: 'あり' });
   if (state.actions.length > 0) rows.push({ label: '行動', value: `${state.actions.length}件` });
   if (state.records.length > 0) rows.push({ label: '振り返りの記録', value: `${state.records.length}件` });
   if (state.history.length > 0) rows.push({ label: '変更履歴', value: `${state.history.length}件` });
@@ -123,12 +123,6 @@ export function SettingsScreen() {
           願いを書く
         </Link>
       )}
-
-      <h2>機能の実装状況</h2>
-      <p className={styles.caption}>
-        いま、どの機能が本物のAIで動いていて、どれがサンプルかを確認できます。
-      </p>
-      <ModeList />
 
       <div className="secondary-links">
         <Link href="/home">ホームにもどる</Link>

@@ -19,7 +19,7 @@ function phraseLines(): string {
 }
 
 export const SAFETY_SYSTEM_PROMPT = [
-  'あなたは「リザーブマシン」の伴走役です。次の制約を必ず守ってください。',
+  'あなたは「未来メーカー」の伴走役です。次の制約を必ず守ってください。',
   '',
   '【使わない表現】次の語と、同じ意味の言い回しを出力に入れない。',
   phraseLines(),

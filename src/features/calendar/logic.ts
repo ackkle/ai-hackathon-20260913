@@ -31,7 +31,7 @@ export function toTemplateStamp(iso: string): string | null {
 
 /** 予定のタイトル。カレンダーの一覧で見分けられるようにする（B案 FR-08） */
 export function buildTitle(action: Action): string {
-  return `【リザーブマシン】${action.title}`;
+  return `【未来メーカー】${action.title}`;
 }
 
 /**
@@ -51,7 +51,7 @@ export function buildDetails(
     `気が重いときは：${action.fallback}`,
     action.startMessage ? `始める言葉：${action.startMessage}` : null,
     action.reservationNo ? `予約番号：${action.reservationNo}` : null,
-    appUrl ? `リザーブマシン：${appUrl}` : null,
+    appUrl ? `未来メーカー：${appUrl}` : null,
   ].filter((line): line is string => line !== null);
   const text = lines.join('\n');
   return text.length <= DETAILS_MAX ? text : `${text.slice(0, DETAILS_MAX - 1)}…`;
