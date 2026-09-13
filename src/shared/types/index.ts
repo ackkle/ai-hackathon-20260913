@@ -73,7 +73,7 @@ export const NextStepSchema = z.object({
   title: z.string(), durationMin: z.number().int().min(5).max(240), prep: z.array(z.string()),
   fallback: z.string().min(1), reason: z.string(), message: z.string(),
 });
-export const ProposalSchema = NextStepSchema.extend({
+export const ProposalSchema = NextStepSchema.partial({ prep: true, fallback: true, reason: true, message: true }).extend({
   id: z.string(), recordId: z.string(), state: z.enum(['pending', 'approved', 'held', 'rejected']),
   createdActionId: z.string().nullable(), decidedAt: IsoDateTimeSchema.nullable(),
 });

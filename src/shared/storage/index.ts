@@ -26,6 +26,11 @@ export function save(data: ReserveState, storage?: StorageLike): StorageResult {
     const validated = ReserveStateSchema.parse(data);
     const target = resolveStorage(storage);
     if (!target) return { ok: false, error: 'この端末に保存できませんでした' };
+    const previous = target.getItem(STORAGE_KEY);
+    if (previous !== null) {
+      try { ReserveStateSchema.parse(JSON.parse(previous)); }
+      catch { return { ok: false, error: '保存データを読めませんでした。記録を確認してから削除してください' }; }
+    }
     target.setItem(STORAGE_KEY, JSON.stringify(validated));
     return { ok: true, error: null };
   } catch {

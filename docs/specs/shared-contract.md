@@ -15,6 +15,7 @@ const result = save(data); // { ok, error }。失敗なら画面に表示する�
 
 - 空状態：`wish`、`blank`、`futureLife`、`tree`、`survey`はnull。各配列は空。
 - `save` は全状態を保存する。直前に `load()` して変更を加え、他画面の更新を古い状態で上書きしない。
+- 読み込めない既存データがある間は `save` を拒否する。本人が記録を確認し、削除を選んだ後に `clear()` して再開する。
 - 次の予約や振り返りは安定したIDで参照する。日付はオフセット付きISO文字列、未設定ならnull。
 - 正式な状態名は `unscheduled / scheduled / registered / done / partial / not_done / skipped`。
 - Issueの `proposed / reserved` は読み書き時に `unscheduled / scheduled` に正規化する。新規画面は正式な状態名を使う。

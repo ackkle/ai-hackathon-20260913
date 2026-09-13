@@ -18,10 +18,19 @@
 
 ## Execution
 
-- [ ] Scaffold Next.js and configure OpenNext, scripts and ignored environment files. The C3 attempt produced a generic Worker and failed during npm install; use the official existing-app OpenNext setup on a create-next-app scaffold instead.
-- [ ] Add `src/shared/types/index.ts` with state and AI payload schemas, `src/shared/storage/index.ts` with `load`, `save`, `clear`, and `src/config/features.ts`. Verify missing/invalid state, round-trip retention, failed writes, and distinct empty states through Vitest tests written first.
-- [ ] Share the frozen contract in a small prerequisite PR after tests and typecheck. Do not mark #2 complete until deployment and route verification are done.
-- [ ] Add layout/CSS and 22 individually addressable route shells; include the sample banner and settings diagnostics. Keep shared UI owned by contributor B untouched.
-- [ ] Verify `npm test`, `npm run lint`, `npm run typecheck`, Next build, Next dev and Worker preview. Visit all route shells and inspect at 360px.
-- [ ] Deploy the authorized project to Cloudflare, verify returned URL, document commands and shared interfaces in README. If authentication is missing, complete local verification and request only the needed login.
+- [x] Scaffold Next.js and configure OpenNext, scripts and ignored environment files. The C3 attempt produced a generic Worker and failed during npm install; use the official existing-app OpenNext setup on a create-next-app scaffold instead.
+- [x] Add `src/shared/types/index.ts` with state and AI payload schemas, `src/shared/storage/index.ts` with `load`, `save`, `clear`, and `src/config/features.ts`. Verify missing/invalid state, round-trip retention, failed writes, and distinct empty states through Vitest tests written first.
+- [x] Share the frozen contract in a small prerequisite PR after tests and typecheck. Do not mark #2 complete until deployment and route verification are done.
+- [x] Add layout/CSS and 22 individually addressable route shells; include the sample banner and settings diagnostics. Keep shared UI owned by contributor B untouched.
+- [x] Verify `npm test`, `npm run lint`, `npm run typecheck`, Next build, Next dev and Worker preview. Visit all route shells and inspect at 360px.
+- [x] Deploy the authorized project to Cloudflare, verify returned URL, document commands and shared interfaces in README. If authentication is missing, complete local verification and request only the needed login.
 - [ ] Fetch/rebase latest main, publish PR with evidence, hand review/merge to another member per CLAUDE.md. Leave issue open until acceptance criteria and merge are satisfied.
+
+## Verification record
+
+- 12 storage/schema tests pass, including review regressions for corrupt-record protection and saved-proposal compatibility.
+- Typecheck and lint pass; Next and OpenNext production builds pass.
+- Next dev and Worker preview served all 22 route shells.
+- Cloudflare deployment: https://reserve-machine-team15.akira0208.workers.dev
+- Browser check: 360px, no horizontal overflow, no console errors, route navigation and concept banner verified.
+- Code review findings addressed; team review and merge remain pending in PR #17.

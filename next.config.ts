@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
+
+initOpenNextCloudflareForDev();
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  devIndicators: false,
+  agentRules: false,
 };
 
 export default nextConfig;
