@@ -1,0 +1,55 @@
+{
+  "wishCategory": "unknown",
+  "questions": [
+    {
+      "id": "fixed_slots",
+      "text": "1週間のうち、自分のために使えそうな時間はいつですか",
+      "kind": "choice",
+      "choices": ["平日の朝", "平日の夜", "休日の午前", "休日の午後", "決まっていない"],
+      "allowUnknown": true
+    },
+    {
+      "id": "fixed_budget",
+      "text": "毎月、自分のために使ってもよさそうな金額はどのくらいですか",
+      "kind": "choice",
+      "choices": ["〜3,000円", "3,000〜10,000円", "10,000〜30,000円", "考えたことがない"],
+      "allowUnknown": true
+    },
+    {
+      "id": "uneasy_moment",
+      "text": "「このままじゃまずい」と感じるのは、どんなときですか",
+      "kind": "choice",
+      "choices": [
+        "仕事以外の予定がない週末",
+        "同年代の話を聞いたとき",
+        "10年後を想像したとき",
+        "うまく言えない"
+      ],
+      "allowUnknown": true
+    },
+    {
+      "id": "past_fun",
+      "text": "前に少しだけ楽しかったことに、近いものはありますか",
+      "kind": "choice",
+      "choices": [
+        "手を動かして何かを作る",
+        "体を動かす",
+        "知らない場所へ行く",
+        "人と話す",
+        "思い当たらない"
+      ],
+      "allowUnknown": true
+    },
+    {
+      "id": "free_note",
+      "text": "ほかに書いておきたいことがあれば、どうぞ（書かなくても進めます）",
+      "kind": "text",
+      "choices": [],
+      "allowUnknown": true
+    }
+  ],
+  "safety": {
+    "isDistress": false,
+    "reason": null
+  }
+}

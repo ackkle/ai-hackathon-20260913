@@ -1,0 +1,108 @@
+{
+  "futureLife": {
+    "text": "週に2回、近くの工房で木工をしている。作ったものを、家族や近所の人に渡している",
+    "priceTag": {
+      "initialCost": { "value": 60000, "source": "ai_estimate", "statId": null },
+      "monthlyCost": { "value": 8000, "source": "ai_estimate", "statId": null },
+      "weeklyHours": { "value": 6, "source": "user", "statId": null }
+    }
+  },
+  "goals": [
+    {
+      "horizon": "10y",
+      "text": "週に2回、工房で木工をして、作ったものを人に渡している",
+      "deadline": "2036-09"
+    },
+    {
+      "horizon": "3y",
+      "text": "自分の道具をひと通り持っていて、月に4回は工房へ行っている",
+      "deadline": "2029-09"
+    },
+    {
+      "horizon": "1y",
+      "text": "月に2回、決まった曜日に工房へ通っている",
+      "deadline": "2027-09"
+    },
+    {
+      "horizon": "3m",
+      "text": "体験に1回行き、続けるかどうかを自分で決めている",
+      "deadline": "2026-12"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "met_01",
+      "kind": "saving",
+      "label": "道具をそろえるための積み立て",
+      "value": 60000,
+      "unit": "円",
+      "source": "ai_estimate",
+      "statId": null
+    },
+    {
+      "id": "met_02",
+      "kind": "frequency",
+      "label": "工房へ行く回数",
+      "value": 2,
+      "unit": "回/月",
+      "source": "ai_estimate",
+      "statId": null
+    },
+    {
+      "id": "met_03",
+      "kind": "price",
+      "label": "1回あたりの費用",
+      "value": 3000,
+      "unit": "円",
+      "source": "ai_estimate",
+      "statId": null
+    },
+    {
+      "id": "met_04",
+      "kind": "note",
+      "label": "金額は目安です。実際の料金は、行き先を決めてから確かめてください",
+      "value": null,
+      "unit": null,
+      "source": "ai_estimate",
+      "statId": null
+    }
+  ],
+  "monthly": [
+    { "month": "2026-09", "text": "体験できる場所を3つ書き出し、1つに行く日を決める" },
+    { "month": "2026-10", "text": "体験に1回行き、手ざわりと帰り道の気分を記録する" },
+    { "month": "2026-11", "text": "もう1回行くか、別のことを試すかを決める" }
+  ],
+  "weeklyActions": [
+    {
+      "id": "act_w1_01",
+      "title": "木工の体験ができる場所を3つ書き出す",
+      "durationMin": 30,
+      "place": "自宅",
+      "prep": ["スマートフォン", "メモ"],
+      "fallback": "1つ見つけて名前を書くだけでも進んでいます",
+      "startMessage": "申し込まなくて大丈夫。見るだけ。",
+      "isFirstDay": true
+    },
+    {
+      "id": "act_w1_02",
+      "title": "書き出した中から1つ選んで、体験できる日を調べる",
+      "durationMin": 20,
+      "place": "自宅",
+      "prep": ["スマートフォン"],
+      "fallback": "開いている曜日を見るだけでも大丈夫です",
+      "startMessage": "決めなくていい。日付を眺めるだけ。",
+      "isFirstDay": false
+    },
+    {
+      "id": "act_w1_03",
+      "title": "休日の午前に、行き方を1回だけ調べる",
+      "durationMin": 15,
+      "place": "自宅",
+      "prep": ["スマートフォン"],
+      "fallback": "経路が出たところで終わっても構いません",
+      "startMessage": "行くかどうかは、あとで決めていい。",
+      "isFirstDay": false
+    }
+  ],
+  "safety": { "isDistress": false, "reason": null }
+}

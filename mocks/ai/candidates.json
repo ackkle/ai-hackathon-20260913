@@ -1,0 +1,29 @@
+{
+  "candidates": [
+    {
+      "id": "cand_01",
+      "name": "木工の1日体験",
+      "reason": "手を動かして何かを作る時間に近く、休日の午前で終わります",
+      "firstTry": "近くの工房の体験日を調べて、カレンダーに空きの日を書き出す",
+      "durationMin": 120,
+      "costYen": { "value": 3000, "source": "ai_estimate", "statId": null }
+    },
+    {
+      "id": "cand_02",
+      "name": "朝の散歩コースを1本決める",
+      "reason": "費用がかからず、平日の朝でも休日でも同じやり方で続けられます",
+      "firstTry": "地図を開いて、家から20分で折り返せる道を1本選ぶ",
+      "durationMin": 40,
+      "costYen": { "value": 0, "source": "ai_estimate", "statId": null }
+    },
+    {
+      "id": "cand_03",
+      "name": "公民館の一般開放の見学",
+      "reason": "申し込みが要らないことが多く、人と何かをする場の様子だけ見られます",
+      "firstTry": "住んでいる市の公民館だよりを1枚ぶん読む",
+      "durationMin": 60,
+      "costYen": { "value": 0, "source": "ai_estimate", "statId": null }
+    }
+  ],
+  "safety": { "isDistress": false, "reason": null }
+}

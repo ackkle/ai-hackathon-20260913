@@ -1,0 +1,36 @@
+{
+  "weeklyActions": [
+    {
+      "id": "act_w2_01",
+      "title": "体験できる場所を1つ選んで、問い合わせ先を控える",
+      "durationMin": 15,
+      "place": "自宅",
+      "prep": ["スマートフォン", "メモ"],
+      "fallback": "電話番号かフォームのどちらかが分かれば十分です",
+      "startMessage": "連絡はしなくていい。控えるだけ。",
+      "isFirstDay": true
+    },
+    {
+      "id": "act_w2_02",
+      "title": "休日の午前に、持ち物と服装を決める",
+      "durationMin": 10,
+      "place": "自宅",
+      "prep": [],
+      "fallback": "汚れてもいい服を1着選ぶだけでも大丈夫です",
+      "startMessage": "行く前提でなくていい。用意だけしておく。",
+      "isFirstDay": false
+    },
+    {
+      "id": "act_w2_03",
+      "title": "体験の日を1つ選んで、カレンダーに入れる",
+      "durationMin": 10,
+      "place": "自宅",
+      "prep": ["スマートフォン"],
+      "fallback": "候補の日を2つ書き出すだけでも進んでいます",
+      "startMessage": "変えてもいい予定として入れる。",
+      "isFirstDay": false
+    }
+  ],
+  "note": "先週の10分の行動が終わったので、同じくらいの大きさで3件にしています",
+  "safety": { "isDistress": false, "reason": null }
+}
