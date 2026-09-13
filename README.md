@@ -6,10 +6,12 @@
 
 ## リザーブマシンの仕様検討
 
+- **[正式仕様・全機能実装計画](docs/specs/mvp-spec.md)**：proposal2を正式採用。開発はこの仕様を基準にします。
+- [採用元のproposal2](docs/specs/mvp-proposal2.md)：原案として保存。
 - [メンバーAのMVP仕様書](docs/specs/member-a.md)：個人案。チームの正式仕様ではありません。
 - [3人の仕様書の統合手順](docs/specs/INTEGRATION.md)：比較表・判断基準・統合用の指示文。
 
-残り2人の案が揃ったら比較し、正式仕様 `docs/specs/mvp-spec.md` を作成します。
+3案を確認し、proposal2を正式採用しました。技術・担当などの未決事項は正式仕様の第17・18章に記載しています。
 
 ## 最初に決めること
 
