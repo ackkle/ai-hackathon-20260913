@@ -1,2 +1,2 @@
-import { ScreenShell } from '@/features/foundation/shell';
-export default function Page() { return <ScreenShell screenId="S-07" />; }
+import { FutureScreen } from '@/features/future';
+export default function Page() { return <FutureScreen />; }
