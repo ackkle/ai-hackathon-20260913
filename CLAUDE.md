@@ -33,16 +33,44 @@ AIハッカソン チーム15（2026年9月13日）。3人 + AI で開発する�
 ## 開発の流れ（Issue 駆動）
 
 ```
-Issue を選ぶ → main から branch → 実装 → 動作確認 → PR → 別のメンバーがレビュー → main にマージ
+Issue を選ぶ → 最新の main から branch → 実装 → 動作確認 → PR → 別のメンバーがレビュー → main にマージ → 全員 pull → Issue を Done
 ```
 
+### 絶対に守る3つ
+
+1. **main に直接 push しない。** すべて branch → PR → レビュー → マージ。ドキュメントの修正も同じ。
+2. **着手前と PR 前に必ず最新の main を取り込む。** これがコンフリクトを防ぐ唯一の方法。
+3. **Issue が終わったらボードを Done にする。** PR の `Closes #N` でマージ時に自動で閉じる。ボードの Status も Done に動かす。
+
+### 手順
+
 1. **Issue を選ぶ。** ボード https://github.com/users/kamekamek/projects/9 で自分にアサインされた Issue を Todo から In Progress に動かす。Issue の「依存」欄にある Issue が Done でなければ着手しない。
-2. **branch を切る。** `git switch main && git pull --ff-only && git switch -c feat/<issue番号>-<短い名前>`。例：`feat/8-ticket`
+2. **最新の main から branch を切る。**
+   ```bash
+   git switch main && git pull --ff-only && git switch -c feat/<issue番号>-<短い名前>
+   ```
+   例：`feat/8-ticket`
 3. **実装する。** Issue の完了条件を満たすまで。間に合わない機能は `config/features.ts` のモードを `mock` か `off` にして、main を壊さない。
 4. **動作確認する。** `npm run dev` で確認し、PR に確認した手順と結果を書く。未確認なら「未確認」と書く。
-5. **PR を出す。** タイトルに Issue 番号（`#8`）、本文に `Closes #8`。テンプレート `.github/pull_request_template.md` に従う。
-6. **レビューとマージ。** 別のメンバーが確認してマージ。自分でマージしない。マージ後は全員 `git pull` する。
-7. **30分ごとに全員で公開URLを開き、一巡をクリックする。** ズレはここで見つける。
+5. **PR を出す前に main を取り込む。**
+   ```bash
+   git fetch origin && git rebase origin/main
+   ```
+   コンフリクトが出たら自分の branch 側で解消してから push する。凍結対象のファイルでコンフリクトしたら、相手に声をかけて一緒に解消する。
+6. **PR を出す。** タイトルに Issue 番号（`#8`）、本文に `Closes #8`。テンプレート `.github/pull_request_template.md` に従う。
+7. **レビューとマージ。** 別のメンバーが確認してマージ（Squash）。自分でマージしない。
+8. **マージされたら全員が pull する。** 実装が終わった直後・次の Issue に入る前に必ず実行する。
+   ```bash
+   git switch main && git pull --ff-only
+   ```
+9. **Issue を Done にする。** `Closes #N` で Issue は自動で閉じる。ボードの Status を Done に動かし、次の Issue を In Progress にする。
+   ```bash
+   gh issue close <N>   # 自動で閉じなかったとき
+   ```
+
+### AI エージェントが作業するとき
+
+上の手順をそのまま守る。特に、作業開始時に `git pull --ff-only`、PR 前に `git rebase origin/main`、main への直接 push 禁止、完了時に Issue を閉じてボードを Done にする、の4点を省略しない。
 
 ## Issue の作り方
 
