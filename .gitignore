@@ -18,6 +18,14 @@ build/
 .next/
 .vercel/
 coverage/
+.open-next/
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+*.tsbuildinfo
+playwright-report/
+test-results/
 
 # Python
 .venv/

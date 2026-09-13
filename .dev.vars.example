@@ -1,0 +1,4 @@
+# Worker preview: copy to .dev.vars. Production: wrangler secret put ANTHROPIC_API_KEY
+NEXTJS_ENV=development
+AI_MODE=mock
+ANTHROPIC_API_KEY=
