@@ -1,2 +1,2 @@
-import { ScreenShell } from '@/features/foundation/shell';
-export default function Page() { return <ScreenShell screenId="S-08" />; }
+import { TreeScreen } from '@/features/tree/tree-screen';
+export default function Page() { return <TreeScreen />; }
