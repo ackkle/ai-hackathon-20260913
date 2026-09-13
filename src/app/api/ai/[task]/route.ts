@@ -5,6 +5,7 @@
  */
 import { NextResponse } from 'next/server';
 import {
+  type AiMode,
   AiConfigError,
   AiOutputError,
   NotImplementedError,
@@ -12,6 +13,7 @@ import {
   getAiProviderName,
   runAiTask,
 } from '@/server/ai';
+import { type SafetyFinding, inspectValue, maskValue } from '@/server/ai/guard';
 import { AI_TASKS, isAiTask } from '@/server/ai/schemas';
 import { validateAiOutput } from '@/server/ai/validate';
 
@@ -40,8 +42,15 @@ async function handle(request: Request, context: RouteContext) {
   const provider = mode === 'real' ? getAiProviderName() : null;
 
   let raw: unknown;
+  let regenerated = false;
   try {
     raw = await runAiTask(task, input, mode);
+    // 使わない表現が入っていたら1回だけ作り直す（F-30）。
+    // モックは毎回同じ内容なので作り直さず、伏せる処理だけを行う。
+    if (mode === 'real' && inspectValue(raw).length > 0) {
+      raw = await runAiTask(task, input, mode);
+      regenerated = true;
+    }
   } catch (error) {
     if (error instanceof NotImplementedError) {
       return NextResponse.json(
@@ -82,7 +91,35 @@ async function handle(request: Request, context: RouteContext) {
     );
   }
 
-  return NextResponse.json({ task, mode, provider, isMock: mode === 'mock', data: result.data });
+  return NextResponse.json({
+    task,
+    mode,
+    provider,
+    isMock: mode === 'mock',
+    ...applySafety(result.data, mode, regenerated),
+  });
+}
+
+/**
+ * 表現の検査（F-30）とお金のガードレール（F-32）。
+ * 該当があれば呼び出し側が1回だけ再生成し、それでも残る分は該当文を伏せて返す（第15章）。
+ */
+function applySafety(data: unknown, mode: AiMode, regenerated: boolean) {
+  const findings = inspectValue(data);
+  if (findings.length === 0) {
+    return { data, safety: { masked: 0, regenerated } };
+  }
+  return {
+    data: maskValue(data),
+    safety: {
+      masked: findings.length,
+      regenerated,
+      // 入力そのものはログに出さない（NFR-05）。どの区分の語だったかだけ返す
+      categories: [...new Set(findings.map((finding: SafetyFinding) => finding.category))],
+      paths: [...new Set(findings.map((finding: SafetyFinding) => finding.path))],
+      mode,
+    },
+  };
 }
 
 export async function GET(request: Request, context: RouteContext) {
