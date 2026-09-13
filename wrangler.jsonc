@@ -6,6 +6,6 @@
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
   "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "reserve-machine-team15" }],
-  "vars": { "AI_MODE": "mock" },
+  "vars": { "AI_MODE": "real", "AI_PROVIDER": "openai", "NEXT_PUBLIC_AI_MODE": "real" },
   "observability": { "enabled": true }
 }
