@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 2,
+  "isDemo": true,
+  "demoPersona": "kenta",
+  "blank": {
+    "type": "four_day_week",
+    "hoursPerWeek": 8,
+    "daysPerYear": 52,
+    "hoursPer10Years": 4160,
+    "source": "policy_calc"
+  },
+  "entry": {
+    "type": "wish"
+  },
+  "discovery": {
+    "tomorrowMood": null,
+    "candidates": [],
+    "selectedCandidateId": null
+  },
+  "wish": {
+    "id": "wish_01",
+    "text": "なんか、このままじゃまずい気がする。何かしたい",
+    "reason": null,
+    "category": "activity",
+    "createdAt": "2026-09-13T20:10:00+09:00"
+  },
+  "answers": [
+    {
+      "questionId": "fixed_slots",
+      "text": "予定を入れられる時間帯",
+      "value": [
+        "holiday_morning",
+        "holiday_afternoon"
+      ],
+      "isUnknown": false
+    },
+    {
+      "questionId": "fixed_duration",
+      "text": "1回に使える時間",
+      "value": "1_3h",
+      "isUnknown": false
+    },
+    {
+      "questionId": "fixed_budget",
+      "text": "月に使える費用（円）",
+      "value": 10000,
+      "isUnknown": false
+    },
+    {
+      "questionId": "fixed_experience",
+      "text": "経験",
+      "value": "none",
+      "isUnknown": false
+    },
+    {
+      "questionId": "fixed_unasked_time",
+      "text": "この半年で、頼まれてもいないのに時間を使ったこと",
+      "value": [
+        "cooking",
+        "making"
+      ],
+      "isUnknown": false
+    },
+    {
+      "questionId": "ai_q1",
+      "text": "月に何回くらい、この活動の時間をとれそうですか",
+      "value": null,
+      "isUnknown": true
+    }
+  ],
+  "availableSlots": [
+    "holiday_morning",
+    "holiday_afternoon"
+  ],
+  "futureLife": {
+    "text": "週3日、陶芸をしている",
+    "priceTag": {
+      "initialCost": {
+        "value": 50000,
+        "source": "ai_estimate",
+        "statId": null
+      },
+      "monthlyCost": {
+        "value": 10000,
+        "source": "ai_estimate",
+        "statId": null
+      },
+      "weeklyHours": {
+        "value": 9,
+        "source": "user"
+      }
+    }
+  },
+  "tree": {
+    "goals": [
+      {
+        "horizon": "1y",
+        "text": "人に見せられる作品を1つ持つ",
+        "deadline": "2027-09",
+        "editedByUser": false
+      },
+      {
+        "horizon": "3y",
+        "text": "小さな作品展に出す",
+        "deadline": "2029-09",
+        "editedByUser": false
+      }
+    ],
+    "metrics": [
+      {
+        "id": "m1",
+        "label": "月あたりの時間",
+        "kind": "frequency",
+        "inputs": {
+          "hoursPerSession": {
+            "value": 3,
+            "source": "user"
+          },
+          "sessionsPerMonth": {
+            "value": 2,
+            "source": "user",
+            "assumed": true
+          }
+        },
+        "result": {
+          "value": 6,
+          "unit": "時間/月",
+          "formula": "3時間 × 月2回 ＝ 月6時間"
+        }
+      },
+      {
+        "id": "m2",
+        "label": "値札",
+        "kind": "price",
+        "inputs": {
+          "initialCost": {
+            "value": 50000,
+            "source": "ai_estimate",
+            "statId": null
+          },
+          "monthlyCost": {
+            "value": 10000,
+            "source": "ai_estimate",
+            "statId": null
+          },
+          "weeklyHours": {
+            "value": 9,
+            "source": "user"
+          }
+        },
+        "result": null,
+        "note": "週の時間は 3時間 × 週3日 ＝ 週9時間。金額は目安です"
+      }
+    ],
+    "monthly": [
+      {
+        "id": "mo1",
+        "text": "体験教室に1回行く",
+        "metricId": "m1"
+      },
+      {
+        "id": "mo2",
+        "text": "近くの教室と道具を調べる",
+        "metricId": null
+      }
+    ],
+    "generatedAt": "2026-09-13T20:12:00+09:00"
+  },
+  "plans": [
+    {
+      "id": "plan_01",
+      "startedAt": "2026-09-14T00:00:00+09:00",
+      "closedAt": null,
+      "actionIds": [
+        "act_01",
+        "act_02",
+        "act_04"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "act_01",
+      "planId": "plan_01",
+      "monthlyId": "mo1",
+      "title": "陶芸体験の空きを調べる",
+      "durationMin": 30,
+      "place": "自宅",
+      "prep": [
+        "スマートフォン"
+      ],
+      "fallback": "教室の名前を検索するだけでもOK",
+      "startMessage": "申し込まなくて大丈夫。見るだけ。",
+      "reservationNo": "RM-20260913-001",
+      "isFirstDay": true,
+      "status": "not_done",
+      "start": "2026-09-19T10:00:00+09:00",
+      "end": "2026-09-19T10:30:00+09:00",
+      "calendar": {
+        "method": "template",
+        "eventId": null,
+        "confirmedAt": "2026-09-13T20:16:00+09:00"
+      },
+      "origin": "tree",
+      "createdAt": "2026-09-13T20:12:00+09:00"
+    },
+    {
+      "id": "act_02",
+      "planId": "plan_01",
+      "monthlyId": "mo2",
+      "title": "教室の作品写真を見る",
+      "durationMin": 15,
+      "place": "自宅",
+      "prep": [
+        "スマートフォン"
+      ],
+      "fallback": "写真を1枚見るだけでもOK",
+      "startMessage": "気に入るものを探さなくて大丈夫。眺めるだけ。",
+      "reservationNo": "RM-20260913-002",
+      "isFirstDay": false,
+      "status": "done",
+      "start": "2026-09-20T10:00:00+09:00",
+      "end": "2026-09-20T10:15:00+09:00",
+      "calendar": {
+        "method": "template",
+        "eventId": null,
+        "confirmedAt": "2026-09-13T20:17:00+09:00"
+      },
+      "origin": "tree",
+      "createdAt": "2026-09-13T20:12:00+09:00"
+    },
+    {
+      "id": "act_04",
+      "planId": "plan_01",
+      "monthlyId": "mo1",
+      "title": "陶芸教室のサイトを1つだけ見る",
+      "durationMin": 5,
+      "place": "自宅",
+      "prep": [
+        "スマートフォン"
+      ],
+      "fallback": "教室の名前を検索するだけでもOK",
+      "startMessage": "5分だけ。見るだけで大丈夫。",
+      "reservationNo": "RM-20260919-001",
+      "isFirstDay": false,
+      "status": "registered",
+      "start": "2026-09-20T09:00:00+09:00",
+      "end": "2026-09-20T09:05:00+09:00",
+      "calendar": {
+        "method": "template",
+        "eventId": null,
+        "confirmedAt": "2026-09-19T21:04:00+09:00"
+      },
+      "origin": "proposal",
+      "createdAt": "2026-09-19T21:02:00+09:00"
+    }
+  ],
+  "records": [
+    {
+      "id": "rec_01",
+      "actionId": "act_01",
+      "result": "not_done",
+      "feeling": "tired",
+      "again": "no_answer",
+      "memo": "疲れていた",
+      "recordedAt": "2026-09-19T21:00:00+09:00"
+    },
+    {
+      "id": "rec_02",
+      "actionId": "act_02",
+      "result": "done",
+      "feeling": "fun",
+      "again": "again",
+      "memo": "",
+      "recordedAt": "2026-09-20T10:30:00+09:00"
+    }
+  ],
+  "proposals": [
+    {
+      "id": "prop_01",
+      "recordId": "rec_01",
+      "type": "smaller",
+      "title": "陶芸教室のサイトを1つだけ見る",
+      "durationMin": 5,
+      "prep": [
+        "スマートフォン"
+      ],
+      "fallback": "教室の名前を検索するだけでもOK",
+      "reason": "前回は疲れていたので、5分で終わる形にしました",
+      "message": "記録してくれてありがとうございます。次は小さく始めましょう。",
+      "state": "approved",
+      "createdActionId": "act_04",
+      "decidedAt": "2026-09-19T21:02:00+09:00"
+    }
+  ],
+  "history": [
+    {
+      "id": "his_01",
+      "actionId": "act_02",
+      "change": "reschedule",
+      "before": {
+        "start": "2026-09-17T20:00:00+09:00",
+        "end": "2026-09-17T20:15:00+09:00"
+      },
+      "after": {
+        "start": "2026-09-20T10:00:00+09:00",
+        "end": "2026-09-20T10:15:00+09:00"
+      },
+      "at": "2026-09-13T20:14:00+09:00"
+    },
+    {
+      "id": "his_02",
+      "actionId": "act_04",
+      "change": "replace",
+      "before": {
+        "replacedAction": {
+          "id": "act_03",
+          "planId": "plan_01",
+          "monthlyId": "mo2",
+          "title": "道具の値段を調べる",
+          "durationMin": 20,
+          "place": "自宅",
+          "prep": [
+            "スマートフォン"
+          ],
+          "fallback": "道具の名前を1つ調べるだけでもOK",
+          "startMessage": "買わなくて大丈夫。値段を見るだけ。",
+          "reservationNo": null,
+          "isFirstDay": false,
+          "status": "unscheduled",
+          "start": null,
+          "end": null,
+          "calendar": {
+            "method": null,
+            "eventId": null,
+            "confirmedAt": null
+          },
+          "origin": "tree",
+          "createdAt": "2026-09-13T20:12:00+09:00"
+        }
+      },
+      "after": {
+        "actionId": "act_04",
+        "title": "陶芸教室のサイトを1つだけ見る",
+        "start": "2026-09-20T09:00:00+09:00",
+        "end": "2026-09-20T09:05:00+09:00"
+      },
+      "at": "2026-09-19T21:03:00+09:00"
+    }
+  ],
+  "survey": null
+}
