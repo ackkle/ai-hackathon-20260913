@@ -512,30 +512,46 @@ AIの呼び出しはサーバー側で行い、キーをブラウザに置かな
 
 ---
 
-## 13. ディレクトリ案
+## 13. ディレクトリ構成（確定）
 
-技術が決まったら確定する。
+技術は Next.js（App Router、TypeScript）を OpenNext アダプタで Cloudflare Workers に載せる（第18章）。Node.js ランタイムを使い、`runtime = 'edge'` は書かない。
 
 ```text
 src/
-  features/
-    blank/          # ② 空白の提示
-    entry/          # ② 入口・願い・明日の過ごし方
-    discovery/      # ③ 体験候補
-    questions/      # ② 画面 ／ ③ AI
-    future/         # ③ 10年後の生活と値札
-    tree/           # ① 計算・編集 ／ ③ 生成
-    reservation/    # ① 日時・予約票
-    calendar/       # ① 方法A・B・C
-    home/           # ① ホーム・履歴
-    reflection/     # ③ 振り返り・次の一歩・次の1週間
-    safety/         # ③ 表現の検査・相談先
-    settings/       # ① 設定・機能モード
-    concept/        # ②③ 構想デモ
-  server/ai/        # ③ AI呼び出しと検証
-  shared/types/     # 共通の型。W0で3人で確定
-  shared/ui/        # 共通の部品
-  config/features   # 機能モードの設定
+  app/
+    layout.tsx, globals.css        # ① W0で作成後は凍結
+    page.tsx                       # S-02 入口 ②
+    blank/page.tsx                 # S-01 空白の提示 ②
+    wish/page.tsx                  # S-03 願いの入力 ②
+    tomorrow/page.tsx              # S-04 明日の過ごし方 ②
+    candidates/page.tsx            # S-05 体験候補 ③
+    questions/page.tsx             # S-06 質問 ②
+    future/page.tsx                # S-07 10年後の生活と値札 ③
+    tree/page.tsx                  # S-08 逆算ツリー ①
+    schedule/page.tsx              # S-09 日時決定 ①
+    ticket/[id]/page.tsx           # S-10 予約票 ①
+    calendar/[id]/page.tsx         # S-11 カレンダー登録 ①
+    home/page.tsx                  # S-12 ホーム ①
+    reflect/[id]/page.tsx          # S-13 振り返り ③
+    next-step/[id]/page.tsx        # S-14 次の一歩 ③
+    next-week/page.tsx             # S-15 次の1週間の計画 ③
+    history/page.tsx               # S-16 履歴 ①
+    settings/page.tsx              # S-17 設定 ①
+    support/page.tsx               # S-18 相談先の案内 ③
+    survey/page.tsx                # S-19 体験アンケート ②
+    concept/records/page.tsx       # G-01 ③
+    concept/auto/page.tsx          # G-02 ②
+    concept/paths/page.tsx         # G-03 ③
+    api/ai/[task]/route.ts         # ③ AI-01〜06。環境変数で mock/real を切替
+  features/                        # 画面部品と計算。担当は app/ の画面と同じ
+    blank/ entry/ discovery/ questions/ future/ tree/ reservation/
+    calendar/ home/ reflection/ safety/ settings/ concept/
+  server/ai/                       # ③ 単独所有。プロンプト・形式検証・モック読込
+  shared/
+    types/                         # 型と zod スキーマ。W0で確定し凍結
+    storage/                       # localStorage の読み書き（F-26）。W0で凍結 ①
+    ui/                            # 共通部品 ②
+  config/features.ts               # 機能モード（F-35）。W0で凍結 ①
 mocks/
   ai/               # AIのモック応答
   concept/          # 構想デモのサンプル
@@ -544,7 +560,12 @@ data/stats/         # 統計の参照データ
 docs/presentation/  # 発表資料
 ```
 
----
+### 13.1 衝突を避けるルール
+
+- `app/` のページファイルは薄く保ち、中身は `features/` に置く。
+- AIの生成処理はすべて `server/ai/` に置き、③が単独で所有する。`features/questions/`・`features/tree/` は画面と計算だけ（②・①）。
+- 凍結対象（`shared/types`、`shared/storage`、`config/features.ts`、`app/layout.tsx`、`globals.css`）を変えるときは、その変更だけの小さなPRを先に出してマージする。
+- 環境変数：ローカルの `next dev` は `.env.local`、`wrangler dev` と本番は `.dev.vars` と `wrangler secret put`。名前は `.env.example` に書く。
 
 ## 14. 完成条件
 
@@ -617,13 +638,13 @@ B案 §20 とC案 §4.1 を合わせる。本書では、第2・第3段階の姿
 | --- | --- | --- |
 | Q-01 | 発表の主人公（佐藤さん／けんたさん／週休3日の会社員）とキャッチコピー | チームで決める |
 | Q-02（決定済み） | proposal2を正式仕様として採用 | 2026年9月13日のユーザー指示 |
-| Q-03 | 使用技術、AIサービスとモデル、デプロイ先 | チームで決める |
+| Q-03（決定済み） | Next.js + OpenNext on Cloudflare Workers、Claude API | 第18章 |
 | Q-04 | 10年後の金額がAIの推定に寄りすぎないか（C案 §11.1 の懸念） | AI-03 を7件の入力で試し、出どころの内訳を見る |
 | Q-05 | 未審査のOAuthアプリでカレンダーAPIを使えるか | B案 Q-03 のとおり確認 |
 | Q-06 | 構想デモ G-01 を本実装に上げる場合の、テイクアウトのファイル形式 | C案 v0.2 §13 の項目を公式情報で確認 |
 | Q-07 | 統計の参照値の転記（項目・最新年・区分） | B案 §11 のとおり一次資料から転記 |
 | Q-08 | 提出の締め切り、動画の長さと形式、機能追加を止める時刻 | 大会の案内を確認 |
-| Q-09 | 担当の割り当てと、③の作業量の分け方 | チームで決める |
+| Q-09（決定済み） | 担当は第18章。③の作業量はW4以降で統計転記と構想デモのサンプルを②へ移す | 第12章 |
 
 ---
 
@@ -631,8 +652,8 @@ B案 §20 とC案 §4.1 を合わせる。本書では、第2・第3段階の姿
 
 - 計画として採用する案：proposal2（正式採用済み）。本ファイルを開発基準とする。
 - 発表の主人公とキャッチコピー：未決定
-- 使用技術・AIサービス・デプロイ先：未決定
-- 担当：未決定
+- 使用技術・AIサービス・デプロイ先：Next.js（App Router、TypeScript）+ OpenNext（`@opennextjs/cloudflare`）で Cloudflare Workers にデプロイ。AIは Claude API。保存は localStorage（DBなし）。2026年9月13日決定
+- 担当：①亀ちゃん（予約・保存・公開） ②リョウコさん（入口・発見・画面） ③アックルさん（AI・伴走）。2026年9月13日決定
 - 機能追加を止める時刻：未決定
 
 残る未決事項は決定後に本書へ反映する。個人案と元の `mvp-proposal2.md` は保存する。採用理由：ユーザーが全機能実装計画proposal2を正式版として指定したため。機能の採用・見送り理由は第3章・第5章を引き継ぐ。
