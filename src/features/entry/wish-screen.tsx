@@ -39,7 +39,7 @@ export function WishScreen() {
 
   return (
     <>
-      <ModeBanner mode={getFeatureMode('F-03')} mockText="サンプル：この端末に保存されます。次の質問はAIのモック応答です。" />
+      <ModeBanner mode={getFeatureMode('F-03')} mockText="サンプル：入力はこの端末に保存されます。" />
       <section className="screen-panel">
         <ScreenHeading screenId="S-03" />
         {stored.error && <p className="notice mb-4">{stored.error}</p>}
