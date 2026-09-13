@@ -22,8 +22,11 @@ export class NormalizeError extends Error {
   }
 }
 
-/** 選択式の質問に必ず入れる逃げ道（B案 §9.5） */
-const UNKNOWN_OPTION = '分からない';
+/**
+ * 「分からない」に当たる選択肢（B案 §9.5）。
+ * 画面は allowUnknown を見て「分からない」を別枠で必ず出す（questions-screen.tsx）。
+ * 選択肢の中にも同じものがあると2つ並ぶので、選択肢からは取り除いて allowUnknown に任せる。
+ */
 const UNKNOWN_WORDS = [
   '分からない',
   'わからない',
@@ -83,16 +86,14 @@ export function normalizeQuestions(raw: QuestionsGeneration) {
       };
     }
 
-    // 選択式は2〜6件。「分からない」が無ければアプリが足す（B案 §9.5）
+    // 選択式は、答えになる選択肢だけを残す。「分からない」は allowUnknown で画面が出す
     const options = (question.options ?? [])
       .map(option => option.trim())
       .filter(Boolean)
+      .filter(option => !UNKNOWN_WORDS.some(word => option.includes(word)))
       .slice(0, 5);
     if (options.length === 0) {
       throw new NormalizeError(`選択肢がありません: ${id}`);
-    }
-    if (!options.some(option => UNKNOWN_WORDS.some(word => option.includes(word)))) {
-      options.push(UNKNOWN_OPTION);
     }
     return {
       id,

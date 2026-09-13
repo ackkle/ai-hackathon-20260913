@@ -18,6 +18,7 @@ const RULES = [
   '- 1問につき1つのことだけ聞く。purpose に「何に使う質問か」を1文で書く。',
   '- type は single（1つ選ぶ）/ multi（複数選ぶ）/ number（数を書く）。',
   '- single・multi は options を2〜5件入れ、unit は null にする。',
+  '  options に「分からない」「まだわからない」は入れない。アプリが別枠で必ず出す。',
   '- number は options を null にし、unit（「時間」「円」など）を入れる。',
   '- allowUnknown は必ず true にする。',
   '- 使える曜日と時間帯はアプリが固定で聞くので、質問に入れない。',

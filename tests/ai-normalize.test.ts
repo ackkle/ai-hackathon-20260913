@@ -75,7 +75,7 @@ describe('normalizeQuestions（AI-01）', () => {
     distress: false,
   };
 
-  it('選択式に「分からない」が無ければ足す', () => {
+  it('「分からない」は選択肢から外し、allowUnknown で画面に出させる', () => {
     const result = normalizeQuestions({
       ...base,
       questions: [
@@ -84,15 +84,34 @@ describe('normalizeQuestions（AI-01）', () => {
           text: '休日に使える時間は',
           purpose: '1回の長さを決めるため',
           type: 'single',
-          options: ['1時間未満', '1〜3時間'],
+          options: ['1時間未満', '1〜3時間', 'まだわからない'],
           unit: null,
           allowUnknown: false,
         },
       ],
     });
-    expect(result.questions[0].options).toEqual(['1時間未満', '1〜3時間', '分からない']);
+    expect(result.questions[0].options).toEqual(['1時間未満', '1〜3時間']);
     expect(result.questions[0].allowUnknown).toBe(true);
     expect(QuestionsResponseSchema.safeParse(result).success).toBe(true);
+  });
+
+  it('選択肢が「分からない」だけなら作り直しにする', () => {
+    expect(() =>
+      normalizeQuestions({
+        ...base,
+        questions: [
+          {
+            id: 'q1',
+            text: '休日に使える時間は',
+            purpose: '1回の長さを決めるため',
+            type: 'single',
+            options: ['分からない'],
+            unit: null,
+            allowUnknown: true,
+          },
+        ],
+      }),
+    ).toThrow(NormalizeError);
   });
 
   it('6問以上は5問に切り詰める', () => {
