@@ -2,7 +2,7 @@
 .env
 .env.*
 !.env.example
-.dev.vars
+!.env.*.example
 *.pem
 *.key
 
@@ -10,21 +10,22 @@
 .DS_Store
 Thumbs.db
 *.log
-npm-debug.log*
 
-# 依存とビルド成果物
+# JavaScript / TypeScript
 node_modules/
-.next/
-out/
-build/
 dist/
+build/
+.next/
+.vercel/
 coverage/
-*.tsbuildinfo
-
-# Cloudflare / OpenNext
 .open-next/
 .wrangler/
-.vercel/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+*.tsbuildinfo
+playwright-report/
+test-results/
 
 # Python
 .venv/
@@ -32,6 +33,3 @@ venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
-
-# Next.js が自動生成する型定義
-next-env.d.ts

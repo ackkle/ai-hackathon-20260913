@@ -1,0 +1,14 @@
+# Worker preview: copy to .dev.vars. Production: wrangler secret put <NAME>
+NEXTJS_ENV=development
+AI_MODE=mock
+
+# AIの提供元。anthropic（既定）/ openai
+AI_PROVIDER=anthropic
+
+# 使うモデル。空なら既定値（anthropic: claude-opus-5 / openai: gpt-5.6-terra）
+ANTHROPIC_MODEL=
+OPENAI_MODEL=
+
+# 選んだ提供元のキーだけあればよい
+ANTHROPIC_API_KEY=
+OPENAI_API_KEY=

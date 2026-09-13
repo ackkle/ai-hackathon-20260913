@@ -1,8 +1,10 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
+
+initOpenNextCloudflareForDev();
 
 const nextConfig: NextConfig = {
-  // AGENTS.md は CLAUDE.md へのシンボリックリンク。
-  // Next.js の自動追記を切らないと、チームの CLAUDE.md が書き換わる
+  devIndicators: false,
   agentRules: false,
 };
 

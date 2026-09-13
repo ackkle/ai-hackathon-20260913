@@ -1,7 +1,8 @@
 {
-  "weeklyActions": [
+  "weekly": [
     {
       "id": "act_w2_01",
+      "monthlyId": "mon_02",
       "title": "体験できる場所を1つ選んで、問い合わせ先を控える",
       "durationMin": 15,
       "place": "自宅",
@@ -12,6 +13,7 @@
     },
     {
       "id": "act_w2_02",
+      "monthlyId": "mon_02",
       "title": "休日の午前に、持ち物と服装を決める",
       "durationMin": 10,
       "place": "自宅",
@@ -22,6 +24,7 @@
     },
     {
       "id": "act_w2_03",
+      "monthlyId": "mon_02",
       "title": "体験の日を1つ選んで、カレンダーに入れる",
       "durationMin": 10,
       "place": "自宅",
@@ -31,6 +34,5 @@
       "isFirstDay": false
     }
   ],
-  "note": "先週の10分の行動が終わったので、同じくらいの大きさで3件にしています",
-  "safety": { "isDistress": false, "reason": null }
+  "distress": false
 }

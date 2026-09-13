@@ -4,6 +4,46 @@
 
 3〜4人で協力してアプリを開発するためのリポジトリです。
 
+## アプリの土台（W0）
+
+公開URL：[リザーブマシン](https://reserve-machine-team15.akira0208.workers.dev)
+
+現在は22画面の雛形です。「サンプル／準備中」の表示があり、AI提案・予約・カレンダー登録はまだ実装していません。画面下部の「画面一覧を見る」から全画面を確認できます。
+
+必要環境：Node.js 22.12以上（Node 22推奨）、npm。
+
+```bash
+npm ci
+cp .env.example .env.local
+cp .dev.vars.example .dev.vars
+npm run dev
+```
+
+開発サーバーは `http://localhost:3000`。Workers実行環境は次のコマンドでビルドして `http://localhost:8787` に起動します。
+
+```bash
+npm run preview
+```
+
+```bash
+npm test
+npm run typecheck
+npm run lint
+```
+
+公開担当がCloudflareにログインした状態で実行します。
+
+```bash
+npx wrangler login
+npm run deploy
+```
+
+本番のAIキーが必要になったら `npx wrangler secret put ANTHROPIC_API_KEY` で設定します。キーをGitHubに貼り付けないでください。現在のWorkerは `AI_MODE=mock` です。Cloudflareの動作設定は `wrangler.jsonc`、OpenNext設定は `open-next.config.ts` です。
+
+共通の型・保存API・AI応答形式は **[共通データ契約](docs/specs/shared-contract.md)** を参照してください。`shared/types`・`shared/storage`・`config/features.ts`・レイアウトは凍結対象です。
+
+Next.js公式雛形にOpenNextを設定しています。C3は生成時にnpmエラーが発生したため、[OpenNext公式の既存アプリ設定手順](https://opennext.js.org/cloudflare/get-started)を適用しました。
+
 ## リザーブマシンの仕様検討
 
 - **[正式仕様・全機能実装計画](docs/specs/mvp-spec.md)**：proposal2を正式採用。開発はこの仕様を基準にします。
@@ -29,7 +69,7 @@ git clone https://github.com/ackkle/ai-hackathon-20260913.git
 cd ai-hackathon-20260913
 ```
 
-アプリの起動方法は、使用技術が決まったらここに追記します。
+起動方法は上の「アプリの土台（W0）」を参照してください。
 
 ## 共同作業の流れ
 

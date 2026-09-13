@@ -4,8 +4,9 @@
  * real … 提供元（Claude / OpenAI）を呼ぶ。プロンプトは W2 で task ごとに足す
  */
 import { loadMock } from './mock';
-import { type LlmClient, createLlmClient, getAiProviderName } from './provider';
+import { type LlmClient, createLlmClient } from './provider';
 import type { AiTask } from './schemas';
+export { taskSchemaNames } from './schemas';
 
 export type AiMode = 'mock' | 'real';
 

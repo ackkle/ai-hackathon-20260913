@@ -16,5 +16,5 @@
       "evidence": "サンプルの記録で、少人数と書かれた項目が上位に入っています"
     }
   ],
-  "safety": { "isDistress": false, "reason": null }
+  "distress": false
 }
