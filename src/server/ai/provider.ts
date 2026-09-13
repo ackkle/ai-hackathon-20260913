@@ -121,13 +121,25 @@ class OpenAiClient implements LlmClient {
     system,
     user,
   }: GenerateJsonParams<T>): Promise<T> {
+    let format: ReturnType<typeof zodTextFormat>;
+    try { format = zodTextFormat(schema, schemaName); }
+    catch (error) {
+      throw new AiConfigError(`OpenAI形式変換エラー（${error instanceof Error ? error.name : 'unknown'}）`);
+    }
     const response = await this.client.responses.parse({
       model: this.model,
       input: [
         { role: 'system', content: system },
         { role: 'user', content: user },
       ],
-      text: { format: zodTextFormat(schema, schemaName) },
+      text: { format },
+    }).catch((error: unknown) => {
+      if (error instanceof OpenAI.APIError) {
+        // Never return the provider's message: auth errors may quote part of a key.
+        const code = typeof error.code === 'string' && /^[a-zA-Z0-9_]+$/.test(error.code) ? error.code : 'unknown';
+        throw new AiConfigError(`OpenAI API エラー（status: ${error.status ?? 'unknown'}, code: ${code}）`);
+      }
+      throw new AiConfigError(`OpenAI接続エラー（${error instanceof Error ? error.name : 'unknown'}）`);
     });
 
     if (response.output_parsed == null) {
