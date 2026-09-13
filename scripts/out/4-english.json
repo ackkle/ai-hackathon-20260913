@@ -1,0 +1,228 @@
+{
+  "wish": "英語を話せるようになりたい",
+  "watch": "頻度型（frequency）の数字が出る",
+  "questions": {
+    "status": 200,
+    "json": {
+      "task": "questions",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "category": "activity",
+        "wishSummary": "英語を話せるようになりたいという願い。",
+        "questions": [
+          {
+            "id": "english_use_scene",
+            "text": "英語を話せるようになったら、まずどんな場面で使ってみたいですか？",
+            "purpose": "10年後の生活で英語がある場面をイメージするための質問です。",
+            "type": "single",
+            "options": [
+              "旅行や街歩き",
+              "海外の人との会話",
+              "仕事や学び",
+              "映画・音楽・趣味",
+              "まだわからない"
+            ],
+            "allowUnknown": true
+          },
+          {
+            "id": "english_conversation_level",
+            "text": "最初に目指したい会話の形はどれに近いですか？",
+            "purpose": "最初の目標を話しやすい大きさにするための質問です。",
+            "type": "single",
+            "options": [
+              "あいさつや自己紹介",
+              "店や道での短いやりとり",
+              "好きなことを少し話す",
+              "相手の話を聞いて返す",
+              "まだわからない"
+            ],
+            "allowUnknown": true
+          },
+          {
+            "id": "english_current_feeling",
+            "text": "今の英語との距離感はどれに近いですか？",
+            "purpose": "始める地点に合う道筋を考えるための質問です。",
+            "type": "single",
+            "options": [
+              "学校で少し学んだことがある",
+              "単語や短い表現ならわかる",
+              "聞くことは少しできる",
+              "ほとんど触れていない",
+              "まだわからない"
+            ],
+            "allowUnknown": true
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "tree": {
+    "status": 200,
+    "json": {
+      "task": "tree",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "futureLife": {
+          "text": "週に1時間ほど、自宅で英語の音声をまねて声に出し、海外の人や旅行先で短い会話を楽しんでいる。知らない表現はメモしながら、自分の言葉であいさつや質問をしている。",
+          "priceTag": {
+            "initialCost": {
+              "value": 0,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "monthlyCost": {
+              "value": 0,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "weeklyHours": {
+              "value": 1,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            }
+          }
+        },
+        "tree": {
+          "goals": [
+            {
+              "horizon": "3y",
+              "text": "身近な話題について、英語で短いやり取りをしている",
+              "deadline": "2029-09"
+            },
+            {
+              "horizon": "1y",
+              "text": "あいさつ・自己紹介・簡単な質問を、英語で声に出している",
+              "deadline": "2027-09"
+            }
+          ],
+          "metrics": [
+            {
+              "id": "speaking_per_month",
+              "label": "声に出す練習の回数",
+              "kind": "frequency",
+              "inputs": {
+                "perMonth": {
+                  "value": 4,
+                  "source": "ai_estimate",
+                  "statId": null,
+                  "assumed": true
+                }
+              },
+              "result": {
+                "value": 48,
+                "unit": "回/年",
+                "formula": "perMonth × 12"
+              },
+              "note": "月あたりに英語を声に出す練習をする回数の目安です。開始費用と月額は目安です。実際の費用は確かめてください。税は含めていません。"
+            },
+            {
+              "id": "cost_note",
+              "label": "費用の見立て",
+              "kind": "note",
+              "inputs": {},
+              "result": null,
+              "note": "今は手元の無料の音声やメモを使う想定です。金額は目安です。実際の費用は確かめてください。税は含めていません。"
+            }
+          ],
+          "monthly": [
+            {
+              "id": "monthly_speaking",
+              "text": "短い英語フレーズを声に出す時間を、月の予定に置く",
+              "metricId": "speaking_per_month"
+            },
+            {
+              "id": "monthly_phrase_list",
+              "text": "使ってみたい英語のあいさつや質問を、メモに集める",
+              "metricId": null
+            }
+          ],
+          "generatedAt": "2026-09-13T05:35:51.195Z"
+        },
+        "weekly": [
+          {
+            "id": "weekly_choose_phrases",
+            "monthlyId": "monthly_phrase_list",
+            "title": "使ってみたい英語フレーズを3つ選ぶ",
+            "durationMin": 15,
+            "place": "自宅",
+            "prep": [
+              "スマートフォンまたはメモ帳"
+            ],
+            "fallback": "1つだけ選んでメモして、ここまでで終わってもよい",
+            "startMessage": "ひとつ選ぶところから。",
+            "isFirstDay": true
+          },
+          {
+            "id": "weekly_listen_repeat",
+            "monthlyId": "monthly_speaking",
+            "title": "短い英語音声を聞いて、1文だけまねる",
+            "durationMin": 20,
+            "place": "自宅",
+            "prep": [
+              "英語音声を再生できる端末",
+              "イヤホン（あれば）"
+            ],
+            "fallback": "音声を1回聞いて、ここまでで終わってもよい",
+            "startMessage": "聞くだけでも大丈夫。",
+            "isFirstDay": false
+          },
+          {
+            "id": "weekly_self_intro",
+            "monthlyId": "monthly_speaking",
+            "title": "自己紹介の短い文を声に出してみる",
+            "durationMin": 20,
+            "place": "自宅",
+            "prep": [
+              "選んだ英語フレーズのメモ"
+            ],
+            "fallback": "最初の1文を小さな声で読んで、ここまでで終わってもよい",
+            "startMessage": "一文から試してみよう。",
+            "isFirstDay": false
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "nextStep": {
+    "status": 200,
+    "json": {
+      "task": "next-step",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "type": "smaller",
+        "title": "使ってみたい英語フレーズを1つだけ選ぶ",
+        "durationMin": 5,
+        "prep": [
+          "英語フレーズのメモやアプリ"
+        ],
+        "fallback": "英語のフレーズを1つ眺めるだけで終えてよい。",
+        "reason": "前回は疲れていて取り組みにくかった記録があるため、同じ内容を短くしました。予定は承認されるまで変わりません。",
+        "message": "疲れていた日の記録を受け取りました。",
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  }
+}

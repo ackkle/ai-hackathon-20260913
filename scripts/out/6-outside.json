@@ -1,0 +1,190 @@
+{
+  "wish": "まだ分からない。少し外に出たい",
+  "watch": "小さな外出の行動になる",
+  "questions": {
+    "status": 200,
+    "json": {
+      "task": "questions",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "category": "unknown",
+        "wishSummary": "まだはっきりした願いは分からないが、少し外に出てみたい気持ちがある。",
+        "questions": [
+          {
+            "id": "q1",
+            "text": "外に出たいと思うとき、近い感覚はどれですか？",
+            "purpose": "外出に求めていることの手がかりに使う質問です。",
+            "type": "single",
+            "options": [
+              "気分を変えたい",
+              "体を少し動かしたい",
+              "景色や空気を変えたい",
+              "誰かや何かとゆるく関わりたい",
+              "まだ分からない"
+            ],
+            "allowUnknown": true
+          },
+          {
+            "id": "q2",
+            "text": "前に少しよかったと感じた外での過ごし方はありますか？",
+            "purpose": "次の候補を本人の過去の心地よさに寄せるための質問です。",
+            "type": "multi",
+            "options": [
+              "近所を歩く",
+              "公園や水辺で過ごす",
+              "お店や図書館を見に行く",
+              "カフェなどで一人で過ごす",
+              "特に思い浮かばない",
+              "分からない"
+            ],
+            "allowUnknown": true
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "tree": {
+    "status": 200,
+    "json": {
+      "task": "tree",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "futureLife": {
+          "text": "10年後、休日の朝や平日の夜に、気分に合わせて近所を少し歩いたりベンチで休んだりする時間が暮らしにある。外の空気や季節の変化に触れる短い外出を、自分のペースで選んでいる。",
+          "priceTag": {
+            "initialCost": {
+              "value": 0,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "monthlyCost": {
+              "value": 0,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "weeklyHours": {
+              "value": 2,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            }
+          }
+        },
+        "tree": {
+          "goals": [
+            {
+              "horizon": "3y",
+              "text": "気分に合わせて近所へ出て、外で過ごす短い時間を選んでいる。",
+              "deadline": "2029-09"
+            },
+            {
+              "horizon": "1y",
+              "text": "休日の朝または平日の夜に、近所へ少し出る機会がある。",
+              "deadline": "2027-09"
+            }
+          ],
+          "metrics": [
+            {
+              "id": "outside_frequency",
+              "label": "近所へ出る回数",
+              "kind": "frequency",
+              "inputs": {
+                "perMonth": {
+                  "value": 2,
+                  "source": "ai_estimate",
+                  "statId": null,
+                  "assumed": true
+                }
+              },
+              "result": {
+                "value": 24,
+                "unit": "回/年",
+                "formula": "perMonth × 12"
+              },
+              "note": "月に近所へ出る回数として見る数字です。金額は目安です。"
+            }
+          ],
+          "monthly": [
+            {
+              "id": "m_choose_route",
+              "text": "自宅から短時間で行けそうな道や立ち寄れそうな場所を一つメモする。",
+              "metricId": null
+            },
+            {
+              "id": "m_outside",
+              "text": "休日の朝か平日の夜に、近所へ出る時間を二回分ゆるく予定に置く。",
+              "metricId": "outside_frequency"
+            }
+          ],
+          "generatedAt": "2026-09-13T05:36:23.819Z"
+        },
+        "weekly": [
+          {
+            "id": "w_look_outside",
+            "monthlyId": "m_choose_route",
+            "title": "玄関の外で空気を感じる",
+            "durationMin": 5,
+            "place": "自宅",
+            "prep": [],
+            "fallback": "玄関や窓のそばで外を眺めるところまでで終わってもよい。",
+            "startMessage": "外の様子を少し見てみよう。",
+            "isFirstDay": true
+          },
+          {
+            "id": "w_short_walk",
+            "monthlyId": "m_outside",
+            "title": "近所を短く歩く",
+            "durationMin": 15,
+            "place": "近所",
+            "prep": [
+              "歩きやすい靴",
+              "鍵"
+            ],
+            "fallback": "建物の前まで出て戻るところまでで終わってもよい。",
+            "startMessage": "行けそうな範囲だけ見に行こう。",
+            "isFirstDay": false
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "nextStep": {
+    "status": 200,
+    "json": {
+      "task": "next-step",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "type": "smaller",
+        "title": "玄関のドアを開けて、室内から外の空気を感じる",
+        "durationMin": 5,
+        "prep": [],
+        "fallback": "ドアの前まで行って終えてもよい。",
+        "reason": "前回は疲れがあって、玄関の外へ出る行動はできなかったとの記録でした。外に出る前の段階にして、短い時間で選べる形にしました。",
+        "message": "疲れていた日の記録も受け取りました。予定は、承認されるまでこのままです。",
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  }
+}

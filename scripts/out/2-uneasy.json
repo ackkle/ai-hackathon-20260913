@@ -1,0 +1,191 @@
+{
+  "wish": "なんか、このままじゃまずい気がする",
+  "watch": "願いを決めつけない",
+  "questions": {
+    "status": 200,
+    "json": {
+      "task": "questions",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "category": "unknown",
+        "wishSummary": "「このままではまずい気がする」と感じていて、これからの状態を少し変えたい気持ちがある。",
+        "questions": [
+          {
+            "id": "q1",
+            "text": "最近、少しでもよかったと感じた時間はどれに近いですか？",
+            "purpose": "今後増やしたい感覚や場面の手がかりに使う質問です。",
+            "type": "single",
+            "options": [
+              "ひとりで落ち着けた時間",
+              "誰かと話した時間",
+              "何かに集中できた時間",
+              "体を休められた時間",
+              "思い当たらない"
+            ],
+            "allowUnknown": true
+          },
+          {
+            "id": "q2",
+            "text": "「まずい」と感じる場面は、どれに近いですか？",
+            "purpose": "気がかりの中心を整理し、次に考える方向を選ぶための質問です。",
+            "type": "multi",
+            "options": [
+              "お金のこと",
+              "仕事・学びのこと",
+              "体調や生活リズムのこと",
+              "人との関係",
+              "毎日の過ごし方",
+              "分からない"
+            ],
+            "allowUnknown": true
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "tree": {
+    "status": 200,
+    "json": {
+      "task": "tree",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "futureLife": {
+          "text": "10年後は、自宅で週に一度、自分の気分や暮らしを短く振り返り、落ち着ける予定を自分で選んでいる。平日夜や休日の朝には、無理のない範囲で外に出る時間と休む時間がある。",
+          "priceTag": {
+            "initialCost": {
+              "value": 0,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "monthlyCost": {
+              "value": 0,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "weeklyHours": {
+              "value": 1,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            }
+          }
+        },
+        "tree": {
+          "goals": [
+            {
+              "horizon": "3y",
+              "text": "自分に合う過ごし方と休み方を把握している",
+              "deadline": "2029-09"
+            },
+            {
+              "horizon": "1y",
+              "text": "気分や気になった場面をときどき書き留めている",
+              "deadline": "2027-09"
+            }
+          ],
+          "metrics": [
+            {
+              "id": "m_checkin_frequency",
+              "label": "振り返りの回数",
+              "kind": "frequency",
+              "inputs": {
+                "perMonth": {
+                  "value": 4,
+                  "source": "ai_estimate",
+                  "statId": null,
+                  "assumed": true
+                }
+              },
+              "result": {
+                "value": 48,
+                "unit": "回/年",
+                "formula": "perMonth × 12"
+              },
+              "note": "月あたりに短く振り返る回数を記すための数字です。金額は目安です。"
+            }
+          ],
+          "monthly": [
+            {
+              "id": "mo_notice",
+              "text": "今月、気分が少し動いた場面を一言ずつ書き留める",
+              "metricId": "m_checkin_frequency"
+            },
+            {
+              "id": "mo_options",
+              "text": "今月、平日夜と休日の朝にできそうな過ごし方を一つずつメモする",
+              "metricId": null
+            }
+          ],
+          "generatedAt": "2026-09-13T05:35:20.021Z"
+        },
+        "weekly": [
+          {
+            "id": "we_first_note",
+            "monthlyId": "mo_notice",
+            "title": "今の気分を一言だけ書く",
+            "durationMin": 5,
+            "place": "自宅",
+            "prep": [
+              "メモ帳またはスマートフォン"
+            ],
+            "fallback": "日付だけ書いて、ここまでで終わってもよい",
+            "startMessage": "一言だけ見てみよう。",
+            "isFirstDay": true
+          },
+          {
+            "id": "we_list_options",
+            "monthlyId": "mo_options",
+            "title": "できそうな過ごし方を二つ並べる",
+            "durationMin": 15,
+            "place": "自宅",
+            "prep": [
+              "メモ帳またはスマートフォン"
+            ],
+            "fallback": "一つだけ書いて、ここまでで終わってもよい",
+            "startMessage": "候補を一つ探してみよう。",
+            "isFirstDay": false
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "nextStep": {
+    "status": 200,
+    "json": {
+      "task": "next-step",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "type": "rest",
+        "title": "休日の朝に5分だけ横になる",
+        "durationMin": 5,
+        "prep": [],
+        "fallback": "座ったまま目を閉じるだけで終えてよい",
+        "reason": "直前は疲れていて、気分を書く行動はできなかった記録でした。今回は記録よりも休む時間を次の一歩にします。承認されるまでは予定は変わりません。",
+        "message": "疲れていたことをそのまま受け取る時間にしましょう。",
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  }
+}

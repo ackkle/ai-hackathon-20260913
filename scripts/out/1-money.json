@@ -1,0 +1,218 @@
+{
+  "wish": "お金持ちになりたい",
+  "watch": "投資商品を出さない。計画の整理から始まる",
+  "questions": {
+    "status": 200,
+    "json": {
+      "task": "questions",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "category": "money",
+        "wishSummary": "「お金持ちになりたい」という願いですね。",
+        "questions": [
+          {
+            "id": "money_goal_image",
+            "text": "「お金持ち」に近づいたと感じるのは、どんな状態ですか？",
+            "purpose": "目指す生活やお金の使い道の方向をつかむための質問です。",
+            "type": "single",
+            "options": [
+              "毎月の生活費にゆとりがある",
+              "大きな買い物や旅行を選びやすい",
+              "将来の費用への心配を小さくしたい",
+              "仕事の選び方に余裕を持ちたい",
+              "まだ言葉にしにくい",
+              "分からない"
+            ],
+            "allowUnknown": true
+          },
+          {
+            "id": "money_target_amount",
+            "text": "まず目安にしたい金額はありますか？",
+            "purpose": "目標額と期限から、月ごとの積立額の目安を考えるための質問です。",
+            "type": "number",
+            "unit": "円",
+            "allowUnknown": true
+          },
+          {
+            "id": "money_target_timing",
+            "text": "その状態を、いつ頃までに目指したいですか？",
+            "purpose": "目標までの期間を大まかに置くための質問です。",
+            "type": "single",
+            "options": [
+              "1年以内",
+              "3年くらい",
+              "5年くらい",
+              "10年くらい",
+              "まだ決めていない",
+              "分からない"
+            ],
+            "allowUnknown": true
+          },
+          {
+            "id": "money_spending_overview",
+            "text": "今の支出について、どのくらい把握できていますか？",
+            "purpose": "毎月まわせそうな金額を考える前に、支出の見通しを確認するための質問です。",
+            "type": "single",
+            "options": [
+              "だいたい把握している",
+              "一部だけ把握している",
+              "これから見てみたい",
+              "今は考えにくい",
+              "分からない"
+            ],
+            "allowUnknown": true
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": true
+      }
+    }
+  },
+  "tree": {
+    "status": 200,
+    "json": {
+      "task": "tree",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "futureLife": {
+          "text": "10年後、毎月の支出と手元に置きたい金額を把握し、家で予定を見ながら旅行や学びに使うお金を選んでいる。急な出費があっても、暮らしの予定を落ち着いて調整している。",
+          "priceTag": {
+            "initialCost": {
+              "value": null,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "monthlyCost": {
+              "value": null,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "weeklyHours": {
+              "value": 1,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            }
+          }
+        },
+        "tree": {
+          "goals": [
+            {
+              "horizon": "3y",
+              "text": "自分にとって安心できる手元のお金の目安と、そのための月ごとの積み立て額を決めている",
+              "deadline": "2029-09"
+            },
+            {
+              "horizon": "1y",
+              "text": "毎月の支出を大まかに記録し、見直したい項目を把握している",
+              "deadline": "2027-09"
+            }
+          ],
+          "metrics": [
+            {
+              "id": "money-note",
+              "label": "お金の見通しメモ",
+              "kind": "note",
+              "inputs": {},
+              "result": null,
+              "note": "手元に置きたい金額、期限、毎月の支出を書き留めるためのメモです。金額は目安です。実際の金額や税は確かめてください。"
+            }
+          ],
+          "monthly": [
+            {
+              "id": "monthly-spending-note",
+              "text": "今月使ったお金を、思い出せる範囲で3つの項目に分けてメモする",
+              "metricId": "money-note"
+            },
+            {
+              "id": "monthly-goal-image",
+              "text": "安心や楽しさにつながるお金の使い道を3つ書き出す",
+              "metricId": "money-note"
+            }
+          ],
+          "generatedAt": "2026-09-13T05:35:03.529Z"
+        },
+        "weekly": [
+          {
+            "id": "weekly-open-note",
+            "monthlyId": "monthly-spending-note",
+            "title": "支出メモを1つ書く",
+            "durationMin": 10,
+            "place": "自宅",
+            "prep": [
+              "スマートフォンのメモ帳または紙とペン"
+            ],
+            "fallback": "直近で買ったものを1つだけ書いて、ここまでで終わってもよい",
+            "startMessage": "ひとつだけ眺めてみよう。",
+            "isFirstDay": true
+          },
+          {
+            "id": "weekly-choose-image",
+            "monthlyId": "monthly-goal-image",
+            "title": "お金を使いたい場面を思い浮かべる",
+            "durationMin": 20,
+            "place": "自宅",
+            "prep": [
+              "紙とペンまたはメモ帳"
+            ],
+            "fallback": "思い浮かんだ場面を1つだけ書いて、ここまでで終わってもよい",
+            "startMessage": "今の気分で一つ選ぼう。",
+            "isFirstDay": false
+          },
+          {
+            "id": "weekly-sort-spending",
+            "monthlyId": "monthly-spending-note",
+            "title": "支出メモを大まかに分ける",
+            "durationMin": 20,
+            "place": "自宅",
+            "prep": [
+              "書いた支出メモ"
+            ],
+            "fallback": "支出を「生活に使ったもの」と「それ以外」に1つだけ分けて、ここまでで終わってもよい",
+            "startMessage": "大まかな分け方で大丈夫。",
+            "isFirstDay": false
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "nextStep": {
+    "status": 200,
+    "json": {
+      "task": "next-step",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "type": "smaller",
+        "title": "支出メモに今日の支出を1つだけ書く",
+        "durationMin": 5,
+        "prep": [
+          "支出メモ"
+        ],
+        "fallback": "支出メモを開くだけで終えてよい",
+        "reason": "直前は疲れていて取り組みにくかった記録があるため、同じ支出の把握を5分の形に小さくしました。",
+        "message": "疲れていた日の記録も、そのままで大丈夫です。",
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  }
+}

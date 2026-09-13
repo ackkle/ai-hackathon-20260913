@@ -1,0 +1,207 @@
+{
+  "wish": "宇宙飛行士になりたい",
+  "watch": "否定せず、近い行動を出す",
+  "questions": {
+    "status": 200,
+    "json": {
+      "task": "questions",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "category": "activity",
+        "wishSummary": "「宇宙飛行士になりたい」という願いです。",
+        "questions": [
+          {
+            "id": "why_space",
+            "text": "宇宙飛行士に惹かれるのは、どの部分ですか？",
+            "purpose": "願いの背景にある望みをつかむための質問です。",
+            "type": "multi",
+            "options": [
+              "宇宙や科学を知ること",
+              "特別な景色を見ること",
+              "探査や発見に関わること",
+              "チームで大きな仕事をすること",
+              "まだ言葉にしにくい",
+              "分からない"
+            ],
+            "allowUnknown": true
+          },
+          {
+            "id": "first_connection",
+            "text": "宇宙に関わることとして、今はどれが近そうですか？",
+            "purpose": "最初に試せそうな関わり方の方向を選ぶための質問です。",
+            "type": "single",
+            "options": [
+              "本や映像で宇宙を知る",
+              "科学館や展示を見に行く",
+              "星空を見る・観察する",
+              "理科や工学を学ぶ",
+              "まだわからない"
+            ],
+            "allowUnknown": true
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "tree": {
+    "status": 200,
+    "json": {
+      "task": "tree",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "futureLife": {
+          "text": "10年後、休日の朝に宇宙科学の公開講座や観望会へ出かけ、平日の夜には宇宙に関する学びや記録を続けている。宇宙飛行士という願いを軸に、宇宙に関わる人や活動と自分なりの接点を持って暮らしている。",
+          "priceTag": {
+            "initialCost": {
+              "value": null,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "monthlyCost": {
+              "value": null,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "weeklyHours": {
+              "value": 2,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            }
+          }
+        },
+        "tree": {
+          "goals": [
+            {
+              "horizon": "3y",
+              "text": "宇宙に関する学びや体験に定期的に触れ、自分が関わりたい分野を言葉にしている",
+              "deadline": "2029-09"
+            },
+            {
+              "horizon": "1y",
+              "text": "宇宙飛行士や宇宙開発について調べ、自分に近い最初の関わり方を試している",
+              "deadline": "2027-09"
+            }
+          ],
+          "metrics": [
+            {
+              "id": "space-contact-frequency",
+              "label": "宇宙に触れる回数",
+              "kind": "frequency",
+              "inputs": {
+                "perMonth": {
+                  "value": 2,
+                  "source": "ai_estimate",
+                  "statId": null,
+                  "assumed": true
+                }
+              },
+              "result": {
+                "value": 24,
+                "unit": "回/年",
+                "formula": "perMonth × 12"
+              },
+              "note": "月に宇宙に関する記事、動画、展示、講座などに触れる回数として読む数字です。金額は目安です。"
+            }
+          ],
+          "monthly": [
+            {
+              "id": "m-space-map",
+              "text": "宇宙飛行士という願いに近い関わり方を、学び・仕事・体験の3つに分けてメモする",
+              "metricId": null
+            },
+            {
+              "id": "m-space-contact",
+              "text": "宇宙に関する記事、動画、展示情報、講座候補に触れる時間を2回つくる",
+              "metricId": "space-contact-frequency"
+            }
+          ],
+          "generatedAt": "2026-09-13T05:36:11.563Z"
+        },
+        "weekly": [
+          {
+            "id": "w-space-note",
+            "monthlyId": "m-space-map",
+            "title": "宇宙飛行士に惹かれる点を3行だけ書く",
+            "durationMin": 10,
+            "place": "自宅",
+            "prep": [
+              "メモ帳またはスマートフォン"
+            ],
+            "fallback": "惹かれる言葉を1つだけ書いて終えてもよい",
+            "startMessage": "10分だけ、宇宙への気持ちを置いてみよう。",
+            "isFirstDay": true
+          },
+          {
+            "id": "w-space-search",
+            "monthlyId": "m-space-contact",
+            "title": "宇宙に関する公開情報を1つ探す",
+            "durationMin": 25,
+            "place": "自宅",
+            "prep": [
+              "インターネットにつながる端末"
+            ],
+            "fallback": "「宇宙 講座」または「宇宙 展示」と検索するだけで終えてもよい",
+            "startMessage": "候補を見るだけでも大丈夫。",
+            "isFirstDay": false
+          },
+          {
+            "id": "w-space-path",
+            "monthlyId": "m-space-map",
+            "title": "見つけた情報から気になる関わり方を1つメモする",
+            "durationMin": 15,
+            "place": "自宅",
+            "prep": [
+              "先に見つけた記事やページ",
+              "メモ帳またはスマートフォン"
+            ],
+            "fallback": "気になった見出しを1つ保存して終えてもよい",
+            "startMessage": "ひとつ選ばず、気になるものを残す時間にしよう。",
+            "isFirstDay": false
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "nextStep": {
+    "status": 200,
+    "json": {
+      "task": "next-step",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "type": "smaller",
+        "title": "宇宙飛行士について気になる言葉を1つだけ書く",
+        "durationMin": 5,
+        "prep": [
+          "メモ帳またはスマホのメモ"
+        ],
+        "fallback": "「宇宙飛行士」とだけメモに書いて終えてもよいです。",
+        "reason": "前回は疲れていて取り組めなかったため、3行書く内容を1語に小さくしました。宇宙に関わりたい分野を言葉にする方向はそのままです。",
+        "message": "疲れていた日の記録も、次の形を選ぶ手がかりになります。承認されるまで予定は変わりません。",
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  }
+}
