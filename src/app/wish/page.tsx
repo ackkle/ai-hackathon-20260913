@@ -1,2 +1,2 @@
-import { ScreenShell } from '@/features/foundation/shell';
-export default function Page() { return <ScreenShell screenId="S-03" />; }
+import { WishScreen } from '@/features/entry/wish-screen';
+export default function Page() { return <WishScreen />; }
