@@ -40,6 +40,9 @@ export function ScheduleScreen() {
   const state = stored.data;
   const requestedId = params.get('actionId');
   const savedAction = requestedId ? findAction(state, requestedId) : firstUnscheduled(state);
+  // 本線から来て行動が見つからないときに見本を出すと、本人の予定を変えたつもりで
+  // 保存されない事故になる（レビュー指摘）。見本は ?sample=1 のときだけにする。
+  const wantsSample = params.get('sample') === '1';
   const isSample = savedAction === null;
   const action = savedAction ?? sampleReservation(requestedId ?? SAMPLE_ACTION_ID);
   const value = localDateTime ?? (action.start ? toLocalInput(action.start) : '');
@@ -82,13 +85,29 @@ export function ScheduleScreen() {
     router.push(`/ticket/${next.action.id}`);
   }
 
+  // 行動が見つからないのに日時入力を出すと、決めたつもりで保存されない
+  if (isSample && !wantsSample) {
+    return (
+      <section className="screen-panel">
+        <ScreenHeading screenId="S-09" />
+        <p className="notice mb-4">日時を決める一歩が見つかりませんでした。</p>
+        <Link className="primary-link w-full justify-center border-0" href="/tree">
+          今週の一歩から選ぶ
+        </Link>
+        <div className="secondary-links">
+          <Link href="/home">ホームにもどる</Link>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <>
       <ModeBanner
         mode={getFeatureMode('F-14')}
         sample={isSample}
-        sampleText="サンプル：保存された行動が見つからないため、見本の行動で表示しています。この画面では保存しません。"
-        mockText="サンプル：日時候補の自動提示はまだ入っていません。手入力で日時を決められます。"
+        sampleText="見本の行動です。この画面では保存しません。"
+        mockText=""
       />
       <section className="screen-panel">
         <ScreenHeading screenId="S-09" />
@@ -121,7 +140,7 @@ export function ScheduleScreen() {
               }}
               className="min-h-[44px] w-full rounded-xl border border-[#d8e1d3] bg-white p-3 text-sm"
             />
-            <span className="mt-1 block text-xs text-[var(--muted)]">日本時間で入力してください。</span>
+            
           </label>
 
           <label className="mb-6 block">

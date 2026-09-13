@@ -41,7 +41,7 @@ function SavedTree({ state }: { state: ReserveState }) {
     </ul></section>
     <section className={styles.level}><h2>3. 必要な数字の目安</h2><ul className={styles.list}>
       {tree.metrics.map(metric => <li className={styles.item} key={metric.id}><h3>{metric.label}</h3><dl>{Object.entries(metric.inputs ?? {}).map(([key, item]) => <div className={styles.number} key={key}><dt>{labels[key] ?? key}</dt><dd><NumberValue item={item} demo={state.isDemo} /></dd></div>)}</dl>
-        {metric.result && !Object.values(metric.inputs ?? {}).some(v => v.source === 'stat' && getFeatureMode('F-11') === 'off') && <p><strong>{metric.result.value.toLocaleString('ja-JP')}{metric.result.unit}</strong><span className={styles.badge}>{state.isDemo ? '計算例・サンプル' : '入力からの計算'}</span><br /><span className={styles.caption}>{metric.result.formula}</span></p>}
+        {metric.result && !Object.values(metric.inputs ?? {}).some(v => v.source === 'stat' && getFeatureMode('F-11') === 'off') && <p><strong>{metric.result.value.toLocaleString('ja-JP')}{metric.result.unit}</strong><span className={styles.badge}>{state.isDemo ? '計算例・サンプル' : '入力からの計算'}</span><br /><span className={styles.caption}>{readableFormula(metric.result.formula)}</span></p>}
         {metric.note && <p className={styles.caption}>{metric.note}</p>}</li>)}
     </ul><p className={styles.caption}>「仮」はまだ決まっていない数字です。金額は目安です。</p></section>
     <section className={styles.level}><h2>4. 今月の行動</h2><ul className={styles.list}>{tree.monthly.map(item => <li className={styles.item} key={item.id}>{item.text}</li>)}</ul></section>
@@ -56,6 +56,16 @@ function SavedTree({ state }: { state: ReserveState }) {
       <p className={styles.caption}>日時が決まる前の「最初の1日」は、始める一歩の候補です。</p>
     </section>
   </div>;
+}
+
+/** 画面に出す計算式。AI/コードの変数名をそのまま見せない */
+const FORMULA_LABELS: Record<string, string> = {
+  'target ÷ months': '目標額 ÷ 月数',
+  'perMonth × 12': '月の回数 × 12か月',
+  perVisit: '1回あたりの費用',
+};
+function readableFormula(formula: string): string {
+  return FORMULA_LABELS[formula] ?? formula;
 }
 
 export function TreeScreen() {
@@ -101,8 +111,8 @@ export function TreeScreen() {
   const hasSavedPlan = state && (state.tree || state.actions.length || state.plans.length || state.records.length || state.proposals.length || state.history.length);
   const canSample = state && !state.wish && state.answers.length === 0 && !hasSavedPlan;
   return <div className={styles.screen}>
-    {(state?.isDemo || getFeatureMode('F-08') === 'mock') && <div className="mode-banner" role="status">{state?.isDemo ? 'デモ用・サンプルの道筋です' : 'サンプル：現在のAIは固定の道筋を提案します'}</div>}
-    <p className="eyebrow">RESERVE MACHINE <span>S-08</span></p><h1>未来を、今週の一歩に。</h1>
+    {(state?.isDemo || getFeatureMode('F-08') === 'mock') && <div className="mode-banner" role="status">{state?.isDemo ? 'デモ用・サンプルの道筋です' : 'サンプル：道筋は決まった例文です'}</div>}
+    <h1>未来を、今週の一歩に。</h1>
     <p className={styles.intro}>遠くの願いから、今日選べる小さな行動へ。自分のペースで始めましょう。</p>
     {error && <div className={styles.error} role="alert"><p>{error}</p>{storageError && <Link className={styles.link} href="/settings">設定で保存内容を確認する</Link>}</div>}
     {!state ? <p role="status">保存内容を読み込んでいます…</p> : state.tree ? <SavedTree state={state} /> : hasSavedPlan ? <Link className={styles.link} href="/home">保存済みの計画をホームで見る</Link> : <div className={styles.start}>

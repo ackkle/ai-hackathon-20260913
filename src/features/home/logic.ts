@@ -20,7 +20,7 @@ const OPEN_STATUS: ReadonlySet<Action['status']> = new Set(['unscheduled', 'sche
 
 export type StatusLabel =
   | '日時未設定'
-  | '日時確定（未登録）'
+  | 'カレンダー未登録'
   | '登録済み'
   | '確認待ち'
   | 'できた'
@@ -61,7 +61,7 @@ export function statusLabel(action: Action, records: ReflectionRecord[], now: Da
   if (isAwaitingReview(action, records, now)) return '確認待ち';
   if (action.start === null) return '日時未設定';
   if (action.status === 'registered' && action.calendar.confirmedAt !== null) return '登録済み';
-  return '日時確定（未登録）';
+  return 'カレンダー未登録';
 }
 
 /** 今の計画の行動。計画がまだ無いときは全部を見る（起動直後やサンプル表示のため） */

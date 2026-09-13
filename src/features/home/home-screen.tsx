@@ -67,7 +67,7 @@ export function HomeScreen() {
             </small>
             <div className="secondary-links">
               <Link href={`/ticket/${next.id}`}>予約票を見る</Link>
-              <Link href="/schedule">日時を変える</Link>
+              <Link href={`/schedule?actionId=${next.id}`}>日時を変える</Link>
             </div>
           </div>
         ) : (
@@ -79,7 +79,7 @@ export function HomeScreen() {
                 : '次の一歩を決めると、ここに出ます。'}
             </small>
             <div className="secondary-links">
-              <Link href={empty ? '/' : '/schedule'}>{empty ? 'はじめる' : '日時を決める'}</Link>
+              <Link href={empty ? '/' : '/tree'}>{empty ? 'はじめる' : '一歩を選ぶ'}</Link>
             </div>
           </div>
         )}
@@ -145,8 +145,8 @@ export function HomeScreen() {
         )}
 
         <div className="secondary-links">
-          <Link href="/tree">ツリーを見る</Link>
-          <Link href="/history">これまでの一歩</Link>
+          {/* 「これまでの一歩」（/history）は画面が未実装なので出さない */}
+          <Link href="/tree">道のりを見る</Link>
           <Link href="/settings">設定</Link>
         </div>
 

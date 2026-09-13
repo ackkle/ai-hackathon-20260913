@@ -8,7 +8,7 @@ export function ScreenShell({ screenId, children }: { screenId: ScreenId; childr
     <>
       <div className="mode-banner" role="status">{concept ? '構想デモ（実際のデータではありません）' : 'サンプル：画面の準備中です'}</div>
       <section className="screen-panel">
-        <p className="eyebrow">RESERVE MACHINE <span>{screenId}</span></p>
+        <p className="eyebrow" data-screen={screenId}><span>リザーブマシン</span></p>
         <h1>{screen.title}</h1>
         <p className="intro">{screen.description}</p>
         <div className="ticket-preview" aria-label="画面の準備状況">
@@ -18,9 +18,12 @@ export function ScreenShell({ screenId, children }: { screenId: ScreenId; childr
         </div>
         {children}
         <Link className="primary-link" href={screen.next}>次の画面を見る <span aria-hidden="true">→</span></Link>
-        {screenId === 'S-02' && <div className="secondary-links"><Link href="/tomorrow">まだ分からない</Link><Link href="/blank">これからの時間を見る</Link></div>}
+
       </section>
-      <details className="route-directory"><summary>画面一覧を見る</summary><nav aria-label="全画面"><ul>{screenRoutes.map(route => <li key={route.id}><Link href={route.path}><span>{route.id}</span>{route.title}</Link></li>)}</ul></nav></details>
+      {/* 画面一覧は開発用。利用者には未実装の画面まで見えてしまうので開発時だけ出す */}
+      {process.env.NODE_ENV === 'development' && (
+        <details className="route-directory"><summary>画面一覧を見る（開発用）</summary><nav aria-label="全画面"><ul>{screenRoutes.map(route => <li key={route.id}><Link href={route.path}><span>{route.id}</span>{route.title}</Link></li>)}</ul></nav></details>
+      )}
     </>
   );
 }

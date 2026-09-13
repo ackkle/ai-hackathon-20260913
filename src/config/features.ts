@@ -11,6 +11,16 @@ featureModes['F-11'] = 'off';
 for (const id of ['F-37', 'F-38', 'F-39'] as FeatureId[]) featureModes[id] = 'concept';
 featureModes['F-26'] = 'real';
 featureModes['F-35'] = 'real';
+// 実装が入った機能。既定の mock のままだと、動いている画面にも「サンプル」の帯が出て
+// 未完成の警告に見える（第10.1節：帯を出すのはモックのときだけ）。
+for (const id of ['F-01', 'F-03', 'F-15', 'F-16', 'F-20', 'F-21'] as FeatureId[]) {
+  featureModes[id] = 'real';
+}
+// 一部だけ入っている機能。F-14 は日時候補が未実装で手入力のみ、
+// F-27・F-34 は全削除だけでカレンダー接続の解除とデモ読み込みは未実装。
+for (const id of ['F-14', 'F-27', 'F-34'] as FeatureId[]) {
+  featureModes[id] = 'simple';
+}
 /**
  * AI が答える機能。AI_MODE=real のときは本実装なので「サンプル」の帯を出さない。
  * F-06 質問（AI-01）／F-07 10年後と値札・F-08 逆算ツリー（AI-03）／F-22 次の一歩（AI-04）。

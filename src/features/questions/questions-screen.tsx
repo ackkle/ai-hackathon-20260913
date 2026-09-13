@@ -6,7 +6,7 @@
  */
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getFeatureMode } from '@/config/features';
 import { ModeBanner, ScreenHeading } from '@/features/reflection/ui';
 import { useStoredState } from '@/features/reflection/use-stored-state';
@@ -152,6 +152,17 @@ export function QuestionsScreen() {
     }
   }
 
+  // 画面を開いたら質問を作り始める。「質問を作る」を押させると、
+  // 初めての人は何も起きない画面を見て止まってしまう。
+  useEffect(() => {
+    if (!canRequest || response || busy || error || savedAnswers.length > 0) return;
+    // AI を呼び始めるのは「外の仕組みとの同期」。送信中の表示のために状態を1つ変える
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void requestQuestions();
+    // requestQuestions は同じ state を見るので、依存は下の4つで足りる
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canRequest, response, busy, error, savedAnswers.length]);
+
   if (stored === null || state === null) return <p className="text-sm text-[var(--muted)]">読み込んでいます…</p>;
 
   function handleSubmit(event: React.FormEvent) {
@@ -172,7 +183,7 @@ export function QuestionsScreen() {
 
   return (
     <>
-      <ModeBanner mode={mode} mockText="サンプル：質問はAIのモック応答です。回答はこの端末に保存されます。" />
+      <ModeBanner mode={mode} mockText="サンプル：質問は決まった例文です。" />
       <section className="screen-panel">
         <ScreenHeading screenId="S-06" />
         {stored.error && <p className="notice mb-4">{stored.error}</p>}
@@ -182,7 +193,7 @@ export function QuestionsScreen() {
         ) : alreadyBuilt ? (
           <p className="notice mb-4">すでに道筋があります。<Link href="/home" className="underline">ホームで続きを見る</Link></p>
         ) : busy ? (
-          <p role="status" className="text-sm text-[var(--muted)]">質問を考えています…</p>
+          <p role="status" className="text-sm text-[var(--muted)]">質問を考えています…（20秒ほどかかります）</p>
         ) : error ? (
           <div className="notice mb-4">
             <p className="mb-2">{error}</p>
@@ -191,16 +202,19 @@ export function QuestionsScreen() {
         ) : !response && savedAnswers.length > 0 ? (
           <div className="ticket-preview">
             <p className="!text-base !mb-2">回答は保存済みです。</p>
-            <small className="!border-0 !pt-0">答え直す場合は「質問を作る」から、もう一度質問を作れます。</small>
+            <small className="!border-0 !pt-0">答え直したいときは、下の「答え直す」から質問を作り直せます。</small>
           </div>
         ) : !response ? (
           <button type="button" onClick={() => void requestQuestions()} disabled={!canRequest} className="primary-link w-full justify-center border-0">
             質問を作る
           </button>
         ) : response ? (
-          response.distress ? (
-            <p className="notice mb-4">書いてくれてありがとうございます。<Link href="/support" className="underline">相談できる場所を見る</Link></p>
-          ) : (
+          <>
+            {response.distress && (
+              <p className="notice mb-4">
+                しんどいときに書いてくれて、ありがとうございます。ここから先は、いつでもやめて大丈夫です。
+              </p>
+            )}
             <form onSubmit={handleSubmit} noValidate>
               <p className="mb-4 text-sm text-[var(--muted)]">{response.wishSummary}</p>
               {response.questions.map(question => (
@@ -220,10 +234,10 @@ export function QuestionsScreen() {
                 disabled={!isDraftComplete(response.questions, draft)}
                 className="primary-link w-full justify-center border-0 disabled:cursor-not-allowed disabled:bg-[#b7c3bb]"
               >
-                回答を保存する
+                次へ（10年後の暮らしを見る）
               </button>
             </form>
-          )
+          </>
         ) : null}
 
         {savedAnswers.length > 0 && !alreadyBuilt && !response && !busy && (

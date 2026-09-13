@@ -92,8 +92,8 @@ describe('F-20 状態の表示', () => {
       calendar: { method: 'template', eventId: null, htmlLink: null, confirmedAt: '2026-09-19T10:00:00+09:00' },
     });
     expect(statusLabel(confirmed, [], NOW)).toBe('登録済み');
-    expect(statusLabel({ ...confirmed, status: 'scheduled' }, [], NOW)).toBe('日時確定（未登録）');
-    expect(statusLabel({ ...confirmed, calendar: { ...confirmed.calendar, confirmedAt: null } }, [], NOW)).toBe('日時確定（未登録）');
+    expect(statusLabel({ ...confirmed, status: 'scheduled' }, [], NOW)).toBe('カレンダー未登録');
+    expect(statusLabel({ ...confirmed, calendar: { ...confirmed.calendar, confirmedAt: null } }, [], NOW)).toBe('カレンダー未登録');
   });
 
   it('日時未設定と結果の状態を出し分ける', () => {

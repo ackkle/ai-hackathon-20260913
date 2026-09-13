@@ -1,6 +1,9 @@
 'use client';
 /**
- * S-02 入口（F-01・F-33）。願いを書く／まだ分からない／記録から見つける（構想デモ）の3つの入口。
+ * S-02 入口（F-01・F-33）。
+ * 入口は「はじめる」1つだけにしている。「まだ分からない」（S-04）と
+ * 「記録から見つける」（構想デモ）は画面が未実装で、押すと準備中の画面に落ちるため。
+ * 実装が入ったら ENTRIES に戻す。
  */
 import Link from 'next/link';
 import { getFeatureMode } from '@/config/features';
@@ -8,15 +11,13 @@ import { ModeBanner, ScreenHeading } from '@/features/reflection/ui';
 import { SEND_NOTICE } from './logic';
 
 const ENTRIES: { href: string; glyph: string; title: string; caption: string; concept?: boolean }[] = [
-  { href: '/wish', glyph: '✏', title: '願いを書く', caption: '「お金持ちになりたい」「何かしたい」でも大丈夫' },
-  { href: '/tomorrow', glyph: '🌱', title: 'まだ分からない', caption: '明日の過ごし方から一緒に探します' },
-  { href: '/concept/records', glyph: '🔍', title: '記録から見つける', caption: '見ている動画などから気づいていない関心を探します', concept: true },
+  { href: '/wish', glyph: '✏', title: 'はじめる', caption: '「お金持ちになりたい」「何かしたい」でも大丈夫' },
 ];
 
 export function EntryScreen() {
   return (
     <>
-      <ModeBanner mode={getFeatureMode('F-01')} mockText="サンプル：どの入口からでも試せます。" />
+      <ModeBanner mode={getFeatureMode('F-01')} mockText="" />
       <section className="screen-panel">
         <ScreenHeading screenId="S-02" />
         <div className="flex flex-col gap-3 mb-6">
@@ -42,9 +43,6 @@ export function EntryScreen() {
           ))}
         </div>
         <p className="text-xs text-[var(--muted)] mb-6">{SEND_NOTICE}</p>
-        <div className="secondary-links">
-          <Link href="/blank">これからの空白を先に見る</Link>
-        </div>
       </section>
     </>
   );

@@ -6,12 +6,25 @@
 import { screenRoutes, type ScreenId } from '@/config/routes';
 import type { FeatureMode } from '@/config/features';
 
+/**
+ * 願いを書いてから予約するまでの道すじ。
+ * いま何番目かを出して、あと何回で終わるかが見えるようにする
+ * （画面IDは開発用なので画面には出さない）。
+ */
+const STEPS: ScreenId[] = ['S-03', 'S-06', 'S-07', 'S-08', 'S-09', 'S-10', 'S-11'];
+
 export function ScreenHeading({ screenId }: { screenId: ScreenId }) {
   const screen = screenRoutes.find(item => item.id === screenId)!;
+  const step = STEPS.indexOf(screenId);
   return (
     <>
-      <p className="eyebrow">
-        RESERVE MACHINE <span>{screenId}</span>
+      <p className="eyebrow" data-screen={screenId}>
+        <span>リザーブマシン</span>
+        {step >= 0 && (
+          <span>
+            {step + 1} / {STEPS.length}
+          </span>
+        )}
       </p>
       <h1>{screen.title}</h1>
       <p className="intro">{screen.description}</p>

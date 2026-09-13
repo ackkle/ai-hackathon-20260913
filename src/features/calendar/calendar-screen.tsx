@@ -72,7 +72,7 @@ export function CalendarScreen({ actionId }: { actionId: string }) {
         mode={mode}
         sample={isSample}
         sampleText="サンプル：保存された行動が見つからないため、見本の行動で表示しています。この画面では保存しません。"
-        mockText="いまはテンプレートURL（方法B）だけ使えます。予定ファイルとAPI登録はこのあと追加します。"
+        mockText="いまは Google カレンダーに入れられます。"
       />
       <section className="screen-panel">
         <ScreenHeading screenId="S-11" />
@@ -108,7 +108,7 @@ export function CalendarScreen({ actionId }: { actionId: string }) {
               rel="noopener noreferrer"
               className="primary-link w-full justify-center border-0"
             >
-              カレンダーを開く（新しいタブ）
+              Googleカレンダーで開く（新しいタブ）
             </a>
             <p className="mt-2 mb-4 text-xs text-[var(--muted)]">
               Googleカレンダーの予定作成画面が開きます。内容を確かめて保存してください。

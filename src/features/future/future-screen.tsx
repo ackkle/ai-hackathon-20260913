@@ -56,7 +56,7 @@ function FutureLifeView({ futureLife }: { futureLife: FutureLife }) {
       </dl>
       <p className="notice">{MONEY_NOTE}</p>
       <p className={styles.caption}>
-        「仮」はまだ決まっていない数字です。あとから自分で直せます。
+        「仮」は、まだ決まっていない数字です。決めるときに確かめてください。
       </p>
     </>
   );
@@ -140,6 +140,16 @@ export function FutureScreen() {
 
   const canGenerate = Boolean(state?.wish && state.answers.length > 0);
 
+  // 開いたら作り始める。ボタンを押させると、初めての人は止まってしまう。
+  useEffect(() => {
+    if (!canGenerate || state?.futureLife || busy || error) return;
+    // AI を呼び始めるのは「外の仕組みとの同期」。送信中の表示のために状態を1つ変える
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void generate();
+    // generate は毎回 loadState で最新を読むので、依存は下の4つで足りる
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canGenerate, state?.futureLife, busy, error]);
+
   return (
     <>
       <ModeBanner
@@ -179,7 +189,7 @@ export function FutureScreen() {
               disabled={busy || storageError}
               onClick={generate}
             >
-              {busy ? '10年後を考えています…' : error ? 'もう一度つくる' : '10年後の生活を見る'}
+              {busy ? '10年後を考えています…（30秒ほどかかります）' : error ? 'もう一度つくる' : '10年後の生活を見る'}
             </button>
             {busy && (
               <p role="status" className={styles.caption}>

@@ -39,7 +39,7 @@ export function WishScreen() {
 
   return (
     <>
-      <ModeBanner mode={getFeatureMode('F-03')} mockText="サンプル：入力はこの端末に保存されます。" />
+      <ModeBanner mode={getFeatureMode('F-03')} mockText="" />
       <section className="screen-panel">
         <ScreenHeading screenId="S-03" />
         {stored.error && <p className="notice mb-4">{stored.error}</p>}
@@ -93,9 +93,12 @@ export function WishScreen() {
         )}
 
         <p className="mt-6 text-xs text-[var(--muted)]">{SEND_NOTICE}</p>
-        <div className="secondary-links">
-          {locked ? <Link href="/questions">質問へ進む</Link> : <Link href="/tomorrow">やっぱり、まだ分からない</Link>}
-        </div>
+        {/* 「やっぱり、まだ分からない」（/tomorrow）は画面が未実装なので出さない */}
+        {locked && (
+          <div className="secondary-links">
+            <Link href="/questions">質問へ進む</Link>
+          </div>
+        )}
       </section>
     </>
   );

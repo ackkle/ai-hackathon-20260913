@@ -7,6 +7,7 @@
 import Link from 'next/link';
 import { getFeatureMode } from '@/config/features';
 import { ModeBanner, ScreenHeading } from '@/features/reflection/ui';
+import { MONEY_NOTE, formatHours, formatYen } from '@/features/safety/money';
 import { useStoredState } from '@/features/reflection/use-stored-state';
 import { findAction, formatRange } from './logic';
 import { sampleReservation } from './sample';
@@ -28,8 +29,8 @@ export function TicketScreen({ actionId }: { actionId: string }) {
       <ModeBanner
         mode={getFeatureMode('F-15')}
         sample={isSample}
-        sampleText="サンプル：保存された行動が見つからないため、見本の予約票を表示しています。"
-        mockText="サンプル：10年後の生活の値札（初期費用・月額・週の時間）はこのあとの画面で計算します。"
+        sampleText="見本の予約票です。"
+        mockText=""
       />
       <section className="screen-panel">
         <ScreenHeading screenId="S-10" />
@@ -59,15 +60,21 @@ export function TicketScreen({ actionId }: { actionId: string }) {
           {action.startMessage && <Row label="始める言葉" value={action.startMessage} />}
         </div>
 
-        {/* C案 §8 の値札欄。数字は W4 で入れるため、いまは出どころごと空にしておく */}
-        <div className="ticket-preview mt-4">
-          <p className="!text-base !mb-2">10年後の生活と値札</p>
-          <Row label="10年後の生活" value={state.futureLife?.text ?? 'このあとの画面で描きます'} />
-          <Row label="初期費用・月額・週の時間" value="このあとの画面で計算します" />
-        </div>
+        {/* 値札は S-07（AI-03）で計算済み。無いときは欄ごと出さない */}
+        {state.futureLife && (
+          <div className="ticket-preview mt-4">
+            <p className="!text-base !mb-2">10年後の暮らし</p>
+            <Row label="こんな毎日" value={state.futureLife.text} />
+            <Row
+              label="かかるお金と時間の目安"
+              value={`はじめに ${formatYen(state.futureLife.priceTag.initialCost.value)} ／ 毎月 ${formatYen(state.futureLife.priceTag.monthlyCost.value)} ／ 週 ${formatHours(state.futureLife.priceTag.weeklyHours.value)}`}
+            />
+            <small className="!border-0 !pt-2 !text-xs">{MONEY_NOTE}</small>
+          </div>
+        )}
 
         <p className="mt-4 text-sm">
-          カレンダー：{registered ? '登録済み（本人確認）' : '未登録'}
+          カレンダー：{registered ? '登録しました' : 'まだ入れていません'}
         </p>
         {!registered && (
           <p className="mb-4 text-xs text-[var(--muted)]">
