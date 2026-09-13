@@ -47,7 +47,11 @@ export function WishScreen() {
         {locked ? (
           <div className="ticket-preview">
             <p className="!text-base !mb-2">{state.wish!.text}</p>
-            <small className="!border-0 !pt-0">この願いはすでに保存されています。設定から新しい願いを始められます。</small>
+            <small className="!border-0 !pt-0">
+              この願いはすでに保存されています。
+              <Link href="/settings" className="underline">設定</Link>
+              から新しい願いを始められます。
+            </small>
           </div>
         ) : (
           <form onSubmit={handleSubmit} noValidate>
