@@ -1,2 +1,11 @@
-import { ScreenShell } from '@/features/foundation/shell';
-export default function Page() { return <ScreenShell screenId="S-11" />; }
+import { Suspense } from 'react';
+import { CalendarScreen } from '@/features/calendar/calendar-screen';
+
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return (
+    <Suspense fallback={null}>
+      <CalendarScreen actionId={id} />
+    </Suspense>
+  );
+}
