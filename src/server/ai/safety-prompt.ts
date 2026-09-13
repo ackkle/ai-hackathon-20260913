@@ -6,9 +6,15 @@
 import { MONEY_NOTE } from '@/features/safety/money';
 import { bannedCategories } from './guard';
 
+/**
+ * 検査に使う語をすべて並べる。
+ * 一部だけ渡していたときは、載せていない語（利回り・投資信託・NISA など）が
+ * 実際に出力へ現れ、検査側で伏せることになった（#13 の7入力確認）。
+ * 検査は全語で行うので、プロンプトにも全語を載せてずれを無くす。
+ */
 function phraseLines(): string {
   return bannedCategories
-    .map(category => `- ${category.label}（${category.source}）：${category.phrases.slice(0, 8).join('、')} など`)
+    .map(category => `- ${category.label}（${category.source}）：${category.phrases.join('、')}`)
     .join('\n');
 }
 
