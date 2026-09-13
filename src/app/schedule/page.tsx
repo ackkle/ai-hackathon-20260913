@@ -1,2 +1,10 @@
-import { ScreenShell } from '@/features/foundation/shell';
-export default function Page() { return <ScreenShell screenId="S-09" />; }
+import { Suspense } from 'react';
+import { ScheduleScreen } from '@/features/reservation/schedule-screen';
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <ScheduleScreen />
+    </Suspense>
+  );
+}
