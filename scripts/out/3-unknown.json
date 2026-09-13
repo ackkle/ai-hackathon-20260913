@@ -1,0 +1,202 @@
+{
+  "wish": "まだ分からない",
+  "watch": "最初の行動が「願いを具体化する」になる",
+  "questions": {
+    "status": 200,
+    "json": {
+      "task": "questions",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "category": "unknown",
+        "wishSummary": "まだ、どんな願いにしたいかは分からない。",
+        "questions": [
+          {
+            "id": "recent_good_moment",
+            "text": "最近、少しでも気分がよかった・心が動いたのはどんなときですか？",
+            "purpose": "願いの手がかりになる場面を見つけるための質問です。",
+            "type": "single",
+            "options": [
+              "趣味や好きなことをしていたとき",
+              "人と話したり一緒にいたとき",
+              "ゆっくり休めたとき",
+              "何かを終えられたとき",
+              "思い当たらない"
+            ],
+            "allowUnknown": true
+          },
+          {
+            "id": "current_trouble_area",
+            "text": "今、少し変わったらよさそうだと感じるのはどのあたりですか？",
+            "purpose": "これから考える方向を選ぶための質問です。",
+            "type": "multi",
+            "options": [
+              "お金や生活のこと",
+              "仕事や学びのこと",
+              "体調や休み方のこと",
+              "人との関わり",
+              "楽しみや趣味",
+              "分からない"
+            ],
+            "allowUnknown": true
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "tree": {
+    "status": 200,
+    "json": {
+      "task": "tree",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "futureLife": {
+          "text": "10年後、休日の朝や平日の夜に、自分の気分に合う過ごし方を選び、心が少し動く時間を暮らしの中に置いている。小さな記録を見返しながら、今の自分に合う楽しみや整え方を知っている。",
+          "priceTag": {
+            "initialCost": {
+              "value": null,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "monthlyCost": {
+              "value": null,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            },
+            "weeklyHours": {
+              "value": null,
+              "source": "ai_estimate",
+              "statId": null,
+              "assumed": true
+            }
+          }
+        },
+        "tree": {
+          "goals": [
+            {
+              "horizon": "3y",
+              "text": "自分の気分が動きやすい過ごし方をいくつか知り、生活の中で選んでいる。",
+              "deadline": "2029-09"
+            },
+            {
+              "horizon": "1y",
+              "text": "休日の朝か平日の夜に、短く自分の様子を確かめる時間を持っている。",
+              "deadline": "2027-09"
+            }
+          ],
+          "metrics": [
+            {
+              "id": "mood_note_frequency",
+              "label": "気分のメモ回数",
+              "kind": "frequency",
+              "inputs": {
+                "perMonth": {
+                  "value": null,
+                  "source": "ai_estimate",
+                  "statId": null,
+                  "assumed": true
+                }
+              },
+              "result": null,
+              "note": "月あたりに、気分が少し動いた場面や過ごし方をメモする回数として読みます。金額は目安です。"
+            }
+          ],
+          "monthly": [
+            {
+              "id": "monthly_try_one",
+              "text": "休日の朝または平日の夜に、気になる過ごし方を一つだけ試し、ひとこと記録する。",
+              "metricId": "mood_note_frequency"
+            },
+            {
+              "id": "monthly_review_notes",
+              "text": "月の終わりに記録を見返し、またやってみたいことを一つ選ぶ。",
+              "metricId": "mood_note_frequency"
+            }
+          ],
+          "generatedAt": "2026-09-13T05:35:34.464Z"
+        },
+        "weekly": [
+          {
+            "id": "weekly_open_note",
+            "monthlyId": "monthly_try_one",
+            "title": "今の気分を一言だけ書く",
+            "durationMin": 10,
+            "place": "自宅",
+            "prep": [
+              "メモ帳またはスマートフォン"
+            ],
+            "fallback": "日時だけを書いて、ここまでで終わってもよい。",
+            "startMessage": "今のことを一言だけ見てみよう。",
+            "isFirstDay": true
+          },
+          {
+            "id": "weekly_small_try",
+            "monthlyId": "monthly_try_one",
+            "title": "短い気分転換を一つ試す",
+            "durationMin": 20,
+            "place": "自宅または近所",
+            "prep": [
+              "動きやすい服装または好きな飲み物"
+            ],
+            "fallback": "窓を開ける、飲み物を用意するなど一つだけで終わってもよい。",
+            "startMessage": "少し試せそうなことを選ぼう。",
+            "isFirstDay": false
+          },
+          {
+            "id": "weekly_mark_memory",
+            "monthlyId": "monthly_review_notes",
+            "title": "心に残った場面に印をつける",
+            "durationMin": 15,
+            "place": "自宅",
+            "prep": [
+              "これまでのメモ"
+            ],
+            "fallback": "一つのメモを開くだけで終わってもよい。",
+            "startMessage": "残っている場面を眺めてみよう。",
+            "isFirstDay": false
+          }
+        ],
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  },
+  "nextStep": {
+    "status": 200,
+    "json": {
+      "task": "next-step",
+      "mode": "real",
+      "provider": "openai",
+      "isMock": false,
+      "data": {
+        "type": "smaller",
+        "title": "今の気分を一語だけメモする",
+        "durationMin": 5,
+        "prep": [
+          "メモ帳またはスマートフォンのメモ"
+        ],
+        "fallback": "「疲れた」とだけ書いて終える。",
+        "reason": "前回は疲れていて取り組みにくかったため、同じ気分の記録をより短い形にしました。休みの朝の中で、負担の少ないタイミングを選べます。",
+        "message": "疲れていたことも、今日の手がかりになります。予定は承認されるまで変わりません。",
+        "distress": false
+      },
+      "safety": {
+        "masked": 0,
+        "regenerated": false
+      }
+    }
+  }
+}
