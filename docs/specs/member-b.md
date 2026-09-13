@@ -1028,6 +1028,7 @@ https://calendar.google.com/calendar/render?action=TEMPLATE
 | FR-16 相談先 | Should | 作らない。AIへの指示で断定と強要を禁じるだけにする |
 
 150分版の完成条件は、TC-01、TC-02、TC-05、TC-12、TC-14、TC-15、TC-19〜23、TC-25、TC-26、TC-29、TC-30 の15件とする。
+TC-05は「願い・目指す状態・今週の行動1件が表示される」、TC-14とTC-15は方法Bだけで確認する、と読み替える。
 
 ---
 
