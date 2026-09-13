@@ -638,7 +638,7 @@ B案 §20 とC案 §4.1 を合わせる。本書では、第2・第3段階の姿
 | --- | --- | --- |
 | Q-01 | 発表の主人公（佐藤さん／けんたさん／週休3日の会社員）とキャッチコピー | チームで決める |
 | Q-02（決定済み） | proposal2を正式仕様として採用 | 2026年9月13日のユーザー指示 |
-| Q-03（決定済み） | Next.js + OpenNext on Cloudflare Workers、Claude API | 第18章 |
+| Q-03（決定済み） | Next.js + OpenNext on Cloudflare Workers、Claude API（既定）。OpenAI API にも切り替えられる | 第18章 |
 | Q-04 | 10年後の金額がAIの推定に寄りすぎないか（C案 §11.1 の懸念） | AI-03 を7件の入力で試し、出どころの内訳を見る |
 | Q-05 | 未審査のOAuthアプリでカレンダーAPIを使えるか | B案 Q-03 のとおり確認 |
 | Q-06 | 構想デモ G-01 を本実装に上げる場合の、テイクアウトのファイル形式 | C案 v0.2 §13 の項目を公式情報で確認 |
@@ -653,6 +653,7 @@ B案 §20 とC案 §4.1 を合わせる。本書では、第2・第3段階の姿
 - 計画として採用する案：proposal2（正式採用済み）。本ファイルを開発基準とする。
 - 発表の主人公とキャッチコピー：未決定
 - 使用技術・AIサービス・デプロイ先：Next.js（App Router、TypeScript）+ OpenNext（`@opennextjs/cloudflare`）で Cloudflare Workers にデプロイ。AIは Claude API。保存は localStorage（DBなし）。2026年9月13日決定
+- AIの提供元の切り替え：Claude API を既定としたまま、OpenAI API にも切り替えられるようにする。環境変数 `AI_PROVIDER`（`anthropic` / `openai`）で選び、差は `src/server/ai/provider.ts` が吸収する。どちらでも出力は同じ zod スキーマで検証する（F-29）。2026年9月13日決定
 - 担当：①アックルさん（予約・保存・公開・デプロイ、GitHub: ackkle） ②リョウコさん（入口・発見・画面、GitHub: teresa9876） ③亀ちゃん（AI・伴走、GitHub: kamekamek）。2026年9月13日決定
 - 機能追加を止める時刻：未決定
 

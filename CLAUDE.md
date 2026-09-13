@@ -14,9 +14,10 @@ AIハッカソン チーム15（2026年9月13日）。3人 + AI で開発する�
 
 - Next.js（App Router、TypeScript、Tailwind）を `@opennextjs/cloudflare` で Cloudflare Workers にデプロイ
 - Node.js ランタイム。`export const runtime = 'edge'` は書かない
-- AI は Claude API。呼び出しはサーバー側（`src/app/api/ai/[task]/route.ts` → `src/server/ai/`）のみ。キーをブラウザに出さない
+- AI は Claude API（既定）。OpenAI API にも切り替えられる。環境変数 `AI_PROVIDER` が `anthropic` か `openai`。差は `src/server/ai/provider.ts` が吸収する
+- 呼び出しはサーバー側（`src/app/api/ai/[task]/route.ts` → `src/server/ai/`）のみ。キーをブラウザに出さない。変数名に `NEXT_PUBLIC_` を付けない
 - 保存は localStorage（キー `reserve-machine:v2`）。DBは使わない
-- 環境変数：`next dev` は `.env.local`、`wrangler dev` と本番は `.dev.vars` / `wrangler secret put`。名前は `.env.example` に書く。キーはコミットしない
+- 環境変数：`next dev` は `.env.local`、`wrangler dev` と本番は `.dev.vars` / `wrangler secret put`。名前は `.env.example` に書く。キーはコミットしない。キーが要るのは担当③と公開URLだけで、担当①②は `AI_MODE=mock` のまま全画面が動く
 
 ## 担当とフォルダ
 

@@ -4,7 +4,14 @@
  * Node.js ランタイムを使う。runtime = 'edge' は書かない。
  */
 import { NextResponse } from 'next/server';
-import { NotImplementedError, getAiMode, runAiTask } from '@/server/ai';
+import {
+  AiConfigError,
+  AiOutputError,
+  NotImplementedError,
+  getAiMode,
+  getAiProviderName,
+  runAiTask,
+} from '@/server/ai';
 import { AI_TASKS, isAiTask } from '@/server/ai/schemas';
 import { validateAiOutput } from '@/server/ai/validate';
 
@@ -30,6 +37,7 @@ async function handle(request: Request, context: RouteContext) {
   }
 
   const mode = getAiMode();
+  const provider = mode === 'real' ? getAiProviderName() : null;
 
   let raw: unknown;
   try {
@@ -37,12 +45,24 @@ async function handle(request: Request, context: RouteContext) {
   } catch (error) {
     if (error instanceof NotImplementedError) {
       return NextResponse.json(
-        { error: 'not_implemented', message: error.message, task, mode },
+        { error: 'not_implemented', message: error.message, task, mode, provider },
         { status: 501 },
       );
     }
+    if (error instanceof AiConfigError) {
+      return NextResponse.json(
+        { error: 'ai_not_configured', message: error.message, task, mode, provider },
+        { status: 500 },
+      );
+    }
+    if (error instanceof AiOutputError) {
+      return NextResponse.json(
+        { error: 'ai_output_failed', message: error.message, task, mode, provider },
+        { status: 502 },
+      );
+    }
     return NextResponse.json(
-      { error: 'ai_failed', message: 'AIの呼び出しに失敗しました', task, mode },
+      { error: 'ai_failed', message: 'AIの呼び出しに失敗しました', task, mode, provider },
       { status: 502 },
     );
   }
@@ -50,12 +70,19 @@ async function handle(request: Request, context: RouteContext) {
   const result = validateAiOutput(task, raw);
   if (!result.ok) {
     return NextResponse.json(
-      { error: 'invalid_output', message: 'AIの出力が形式に合いません', task, issues: result.issues },
+      {
+        error: 'invalid_output',
+        message: 'AIの出力が形式に合いません',
+        task,
+        mode,
+        provider,
+        issues: result.issues,
+      },
       { status: 502 },
     );
   }
 
-  return NextResponse.json({ task, mode, isMock: mode === 'mock', data: result.data });
+  return NextResponse.json({ task, mode, provider, isMock: mode === 'mock', data: result.data });
 }
 
 export async function GET(request: Request, context: RouteContext) {
